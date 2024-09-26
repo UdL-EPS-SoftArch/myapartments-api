@@ -1,0 +1,9 @@
+allowed-origins: "https://myapartments.netlify.app, https://deploy-preview-*--myapartments.netlify.app"
+
+logging:
+    level:
+        org:
+            hibernate: error
+            springframework.core: error
+            springframework.web: error
+        root: error

@@ -1,0 +1,15 @@
+@startuml
+
+class User extends UriEntity implements UserDetails {
+  username : String
+  password : String
+  email : String
+}
+
+class UriEntity {
+  uri : String
+}
+
+User "1" --right-- "*" Resource : owner <
+
+@enduml
