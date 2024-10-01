@@ -22,8 +22,11 @@ Spring Boot project including Spring REST, HATEOAS, JPA, etc. Additional details
 | Register Owner   |       | Find Advertisement  | Publish Advertisement          |
 | Login            |       | Request Visit       | List Owned Apartments          |
 | Logout           |       |                     | List Own Advertisements        |
-|                  |       |                     | Accept Visit                   |
-|                  |       |                     | Reject Visit                   |
+| View Profile     |       |                     | Accept Visit                   |
+| Edit Profile     |       |                     | Reject Visit                   |
+| Delete Account   |       |                     | Modify Apartments details      |
+|                  |       |                     | Modify Advertisements details                               |
+    
 
 ## Entities Model
 
