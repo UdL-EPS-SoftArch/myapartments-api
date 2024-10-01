@@ -16,14 +16,14 @@ Spring Boot project including Spring REST, HATEOAS, JPA, etc. Additional details
 
 ## Features per Stakeholder
 
-| USER             | ADMIN | STUDENT             | OWNER                          |
-|------------------|-------|---------------------|--------------------------------|
-| Register Student |       | List Advertisements | Register Apartment (and rooms) |
-| Register Owner   |       | Find Advertisement  | Publish Advertisement          |
-| Login            |       | Request Visit       | List Owned Apartments          |
-| Logout           |       |                     | List Own Advertisements        |
-|                  |       |                     | Accept Visit                   |
-|                  |       |                     | Reject Visit                   |
+| USER             | ADMIN                 | STUDENT              | OWNER                          |
+|------------------|-----------------------|----------------------|--------------------------------|
+| Register Student | Manage Users (CRUD)   | List Advertisements  | Register Apartment (and rooms) |
+| Register Owner   | Manage Apartments     | Find Advertisement   | Publish Advertisement          |
+| Login            | Manage Advertisements | Request Visit        | List Owned Apartments          |
+| Logout           |                       | Cancel Visit         | List Own Advertisements        |
+| Update profile   |                       | Review Advertisement | Accept Visit                   |
+|                  |                       | View Visit Status    | Reject Visit                   |
 
 ## Entities Model
 
