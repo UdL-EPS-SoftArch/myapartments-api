@@ -14,10 +14,8 @@ public class Apartment extends UriEntity<Long> {
     Long id;
 
     String address;
-
     String postalCode;
-
+    String city;
     String country;
-
 }
 
