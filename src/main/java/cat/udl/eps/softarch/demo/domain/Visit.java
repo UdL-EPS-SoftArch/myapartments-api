@@ -18,7 +18,7 @@ public class Visit extends UriEntity<Long>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @NotNull
     private ZonedDateTime when;
