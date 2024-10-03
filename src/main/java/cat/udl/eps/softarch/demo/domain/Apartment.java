@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,14 +17,17 @@ import java.util.Date;
 public class Apartment extends UriEntity<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    int floor;
-    String address;
-    String postalCode;
-    String city;
-    String country;
-    String description;
-    Date registrationDate;
+    @NotEmpty
+    private String name;
+
+    private int floor;
+    private String address;
+    private String postalCode;
+    private String city;
+    private String country;
+    private String description;
+    private Date registrationDate;
 }
 
