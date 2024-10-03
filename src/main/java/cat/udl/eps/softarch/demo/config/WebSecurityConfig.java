@@ -27,18 +27,18 @@ public class WebSecurityConfig {
     @Bean
     protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((auth) -> auth
-                .requestMatchers(HttpMethod.GET, "/identity").authenticated()
-                .requestMatchers(HttpMethod.POST, "/users").anonymous()
-                .requestMatchers(HttpMethod.POST, "/users/*").denyAll()
-                .requestMatchers(HttpMethod.POST, "/*/*").authenticated()
-                .requestMatchers(HttpMethod.PUT, "/*/*").authenticated()
-                .requestMatchers(HttpMethod.PATCH, "/*/*").authenticated()
-                .requestMatchers(HttpMethod.DELETE, "/*/*").authenticated()
-                .anyRequest().permitAll())
-            .csrf((csrf) -> csrf.disable())
-            .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .cors((cors) -> cors.configurationSource(corsConfigurationSource()))
-            .httpBasic((httpBasic) -> httpBasic.realmName("demo"));
+                        .requestMatchers(HttpMethod.GET, "/identity").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/users").anonymous()
+                        .requestMatchers(HttpMethod.POST, "/users/*").denyAll()
+                        .requestMatchers(HttpMethod.POST, "/*/*").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/*/*").authenticated()
+                        .requestMatchers(HttpMethod.PATCH, "/*/*").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/*/*").authenticated()
+                        .anyRequest().permitAll())
+                .csrf((csrf) -> csrf.disable())
+                .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .cors((cors) -> cors.configurationSource(corsConfigurationSource()))
+                .httpBasic((httpBasic) -> httpBasic.realmName("demo"));
         return http.build();
     }
 
