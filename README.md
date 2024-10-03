@@ -25,6 +25,7 @@ Spring Boot project including Spring REST, HATEOAS, JPA, etc. Additional details
 | View profile     |                               | Cancel Visit         | Accept Visit                   |
 | Edit profile     |                               | Review Advertisement | Reject Visit                   |
 |                  |                               | View Visit Status    |                                |
+
 ## Entities Model
 
 ![EntityModelsDiagram](https://www.plantuml.com/plantuml/svg/5Sqn3i8m30NGdLF00LhlJ6Ne1X9InG5Cuf98YHFPFqBS7fZU-1O76qOjXrFMK4QKOmAwducCt_Ch8utdSB7G5AAOGwlqYDTflM_JrdPSB2Ig7-vigABmYNicazqf2KUdobbfLMHayLkBKkR-_nRH-FCB?v0)
