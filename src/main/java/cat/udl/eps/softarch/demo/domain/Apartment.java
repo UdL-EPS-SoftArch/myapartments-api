@@ -18,6 +18,7 @@ public class Apartment extends UriEntity<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    int floor;
     String address;
     String postalCode;
     String city;
