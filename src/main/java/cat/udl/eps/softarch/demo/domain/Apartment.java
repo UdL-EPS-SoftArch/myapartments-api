@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 
 @EqualsAndHashCode(callSuper = true)
@@ -28,6 +28,6 @@ public class Apartment extends UriEntity<Long> {
     private String city;
     private String country;
     private String description;
-    private Date registrationDate;
+    private ZonedDateTime registrationDate;
 }
 
