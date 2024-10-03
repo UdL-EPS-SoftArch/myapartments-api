@@ -18,7 +18,7 @@ Spring Boot project including Spring REST, HATEOAS, JPA, etc. Additional details
 
 | USER             | ADMIN                         | STUDENT              | OWNER                          |
 |------------------|-------------------------------|----------------------|--------------------------------|
-| Register Student | Add and delete advertisements | List Advertisements  | Register Apartment (and rooms) |
+| Register Student | Delete advertisements         | List Advertisements  | Register Apartment (and rooms) |
 | Register Owner   | Block user                    | Find Advertisement   | Publish Advertisement          |
 | Login            | Delete User                   | Request Visit        | List Owned Apartments          |
 | Logout           |                               | Filter advertisement | List Own Advertisements        |
