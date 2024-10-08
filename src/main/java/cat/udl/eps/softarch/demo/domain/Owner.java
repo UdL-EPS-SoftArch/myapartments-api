@@ -9,7 +9,6 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 
 @Entity
-@Table(name = "Owner")
 @PrimaryKeyJoinColumn(name = "user_id")
 @Data
 @EqualsAndHashCode(callSuper = true)
