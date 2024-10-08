@@ -4,12 +4,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.time.ZonedDateTime;
-
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -29,5 +30,8 @@ public class Apartment extends UriEntity<Long> {
     private String country;
     private String description;
     private ZonedDateTime registrationDate;
-}
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Owner owner;
+}
