@@ -33,5 +33,5 @@ public class Apartment extends UriEntity<Long> {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User owner;
+    private Owner owner;
 }

@@ -42,9 +42,6 @@ public class User extends UriEntity<String> implements UserDetails {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private boolean passwordReset;
 
-	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Apartment> apartments;
-
 	public void encodePassword() {
 		this.password = passwordEncoder.encode(this.password);
 	}
