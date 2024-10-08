@@ -1,14 +1,13 @@
 package cat.udl.eps.softarch.demo.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @EqualsAndHashCode(callSuper = true)
@@ -29,5 +28,9 @@ public class Apartment extends UriEntity<Long> {
     private String country;
     private String description;
     private ZonedDateTime registrationDate;
+
+
+    @OneToMany(mappedBy = "apartament", cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<Room> rooms;
 }
 
