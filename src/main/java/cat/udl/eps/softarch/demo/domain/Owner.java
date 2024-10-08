@@ -14,7 +14,5 @@ public class Owner extends User {
     private String phoneNumber;
     private String name;
     private String address;
-
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Apartment> apartments;
+    
 }
