@@ -13,4 +13,5 @@ public interface OwnerRepository extends CrudRepository<Owner, Long>, PagingAndS
     Optional<Owner> findById(@Param("id") Long id);
     List<Owner> findByName(@Param("name") String name);
     List<Owner> findByPhone(@Param("phoneNumber") String phoneNumber);
+    List<Apartment> findApartmentsByUserId(@Param("id") Long id);
 }
