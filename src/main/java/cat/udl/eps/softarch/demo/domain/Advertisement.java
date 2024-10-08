@@ -1,15 +1,13 @@
 package cat.udl.eps.softarch.demo.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -43,6 +41,8 @@ public class Advertisement extends UriEntity<Long> {
     @NotNull
     private String address;
 
+    @OneToMany(mappedBy = "advertisement", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Visit> visits;
 
     public Advertisement() {
         this.creationDate = ZonedDateTime.now();
