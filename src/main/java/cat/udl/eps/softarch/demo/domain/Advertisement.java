@@ -1,9 +1,7 @@
 package cat.udl.eps.softarch.demo.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,6 +40,11 @@ public class Advertisement extends UriEntity<Long> {
 
     @NotNull
     private String address;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @NotNull
+    @ManyToOne
+    public AdvertisementStatus adStatus;
 
 
     public Advertisement() {
