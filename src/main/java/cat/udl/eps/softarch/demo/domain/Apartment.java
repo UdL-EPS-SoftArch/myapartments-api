@@ -1,6 +1,14 @@
 package cat.udl.eps.softarch.demo.domain;
 
+
 import jakarta.persistence.*;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -8,7 +16,6 @@ import lombok.EqualsAndHashCode;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -34,3 +41,8 @@ public class Apartment extends UriEntity<Long> {
     public List<Room> rooms;
 }
 
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Owner owner;
+}

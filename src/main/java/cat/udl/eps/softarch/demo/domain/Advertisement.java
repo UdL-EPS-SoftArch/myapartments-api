@@ -1,5 +1,8 @@
 package cat.udl.eps.softarch.demo.domain;
 
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -41,8 +44,14 @@ public class Advertisement extends UriEntity<Long> {
     @NotNull
     private String address;
 
+
     @OneToMany(mappedBy = "advertisement", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Visit> visits;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @NotNull
+    @ManyToOne
+    public AdvertisementStatus adStatus;
 
     public Advertisement() {
         this.creationDate = ZonedDateTime.now();
