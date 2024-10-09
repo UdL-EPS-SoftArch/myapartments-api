@@ -28,14 +28,14 @@ Feature: Register User
     Given I'm not logged in
     When I register a new user with username "user", email "user@sample.app" and password ""
     Then The response code is 400
-    And The error message is "must not be blank"
+    And The error message is "no debe ser nulo"
     And It has not been created a user with username "user"
 
   Scenario: Register user with empty email
     Given I'm not logged in
     When I register a new user with username "user", email "" and password "password"
     Then The response code is 400
-    And The error message is "must not be blank"
+    And The error message is "no debe ser nulo"
     And It has not been created a user with username "user"
 
   Scenario: Register user with invalid email

@@ -2,6 +2,7 @@ package cat.udl.eps.softarch.demo.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +26,7 @@ public class Advertisement extends UriEntity<Long> {
     private String description;
 
     @NotNull
+    @Min(value = 1, message = "El valor debe ser mayor que 0")
     private Double price;
 
     @NotNull
@@ -33,13 +35,11 @@ public class Advertisement extends UriEntity<Long> {
     @NotNull
     private String country;
 
+    @NotNull
     private ZonedDateTime creationDate;
 
-    @NotNull
-    private String city;
+    private ZonedDateTime expirationDate;
 
-    @NotNull
-    private String address;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @NotNull
