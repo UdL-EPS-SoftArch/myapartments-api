@@ -28,8 +28,6 @@ public class Room extends UriEntity<Long> {
 
 
     @ManyToOne()
-    @JsonIdentityReference(alwaysAsId = true) // Only serialize the pet ID
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Apartment apart;
 
 }
