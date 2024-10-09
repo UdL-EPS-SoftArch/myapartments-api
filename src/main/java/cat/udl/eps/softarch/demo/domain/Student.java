@@ -25,6 +25,6 @@ public class Student extends User {
     @Override
     @ElementCollection
     public Collection<GrantedAuthority> getAuthorities(){
-        return AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_CLIENT");
+        return AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_STUDENT");
     }
 }
