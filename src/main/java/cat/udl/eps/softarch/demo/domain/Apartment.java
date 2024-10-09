@@ -1,19 +1,16 @@
 package cat.udl.eps.softarch.demo.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
-@Entity
+@Entity(name = "apartment")
 @Data
 public class Apartment extends UriEntity<Long> {
     @Id
@@ -34,4 +31,8 @@ public class Apartment extends UriEntity<Long> {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Owner owner;
+
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<Room> rooms;
 }
