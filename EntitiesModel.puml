@@ -11,7 +11,10 @@ class UriEntity {
 }
 
 class Admin extends User {}
-class Student extends User {}
+class Student extends User {
+    phoneNumber : String
+    name : String
+}
 class Owner extends User {}
 
 class Property extends UriEntity {
