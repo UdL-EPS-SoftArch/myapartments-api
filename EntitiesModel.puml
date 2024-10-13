@@ -1,24 +1,19 @@
 @startuml
 
-class User extends UriEntity implements UserDetails {
-    username : String
-    password : String
-    email : String
-}
-
 class UriEntity {
     uri : String
 }
 
-class Admin extends User {}
-class Student extends User {
-    phoneNumber : String
-    name : String
-}
-class Owner extends User {}
-
 class Property extends UriEntity {
     description : String
+}
+
+class ApartmentDetails extends UriEntity{
+    square : Float
+    numBathrooms : Integer
+    numBedrooms : Integer
+    hasAC : Boolean
+    hasElevator : Boolean
 }
 
 class Apartment extends Property {
@@ -27,10 +22,11 @@ class Apartment extends Property {
     city : String
 }
 Owner "1" --up-- "*" Apartment : owner <
+Apartment "1" --down-- "1" ApartmentDetails : details <
 
 class Room extends Property {
 }
-Apartment "1" --left-- "*" Room : in <
+Apartment "1" --right-- "*" Room : in <
 
 class Advertisement extends UriEntity {
     title : String
@@ -44,5 +40,25 @@ class Visit extends UriEntity {
 }
 Advertisement "1" --right-- "*" Visit : for <
 Student "1" --left-- "*" Visit : visitor <
+
+class Review extends UriEntity {
+    title : String
+    description : String
+    rating : Double
+}
+Advertisement "1" --down-- "*" Review : about <
+
+class User extends UriEntity implements UserDetails {
+    username : String
+    password : String
+    email : String
+}
+
+class Admin extends User {}
+class Student extends User {
+    phoneNumber : String
+    name : String
+}
+class Owner extends User {}
 
 @enduml

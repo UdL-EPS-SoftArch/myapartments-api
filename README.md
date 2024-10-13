@@ -28,4 +28,4 @@ Spring Boot project including Spring REST, HATEOAS, JPA, etc. Additional details
 
 ## Entities Model
 
-![EntityModelsDiagram](https://www.plantuml.com/plantuml/svg/5Sqn3i8m30NGdLF00LhlJ6Ne1X9InG5Cuf98YHFPFqBS7fZU-1O76qOjXrFMK4QKOmAwducCt_Ch8utdSB7G5AAOGwlqYDTflM_JrdPSB2Ig7-vigABmYNicazqf2KUdobbfLMHayLkBKkR-_nRH-FCB?v0)
+![EntityModelsDiagram](https://www.plantuml.com/plantuml/svg/5OuxheCm403xTugN0u23mNnIaO8kaIAX7C3iBi4I_iXUAyhjGwffHgCP4-l8sUv_9-DWpqZ_6tD85o6YVfSlmrjUSg88tZ4vBi5RySHRCJtcOlOhNoDimdvqE3Bs45AXWn5QGrUrjLgmmGQgOP1we0PwTLxxLKhLAPHTtTPYScpOKBfxfBqClv6H71xy0W00)
