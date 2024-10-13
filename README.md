@@ -28,4 +28,77 @@ Spring Boot project including Spring REST, HATEOAS, JPA, etc. Additional details
 
 ## Entities Model
 
-![EntityModelsDiagram](https://www.plantuml.com/plantuml/svg/5OuxheCm403xTugN0u23mNnIaO8kaIAX7C3iBi4I_iXUAyhjGwffHgCP4-l8sUv_9-DWpqZ_6tD85o6YVfSlmrjUSg88tZ4vBi5RySHRCJtcOlOhNoDimdvqE3Bs45AXWn5QGrUrjLgmmGQgOP1we0PwTLxxLKhLAPHTtTPYScpOKBfxfBqClv6H71xy0W00)
+```mermaid
+classDiagram
+
+class UriEntity {
+    String uri
+}
+UriEntity <|-- Property
+UriEntity <|-- ApartmentDetails
+UriEntity <|-- Advertisement
+UriEntity <|-- Visit
+UriEntity <|-- Review
+UriEntity <|-- User
+
+class UserDetails { <<interface>> }
+
+class User {
+    String username
+    String password
+    String email
+}
+UserDetails <|.. User
+User <|-- Admin
+User <|-- Student
+User <|-- Owner
+
+class Student {
+    String phoneNumber
+    String name
+}
+
+class Property {
+    String description
+}
+Property <|-- Apartment
+Property <|-- Room
+
+class Apartment {
+    String street
+    String number
+    String city
+}
+Owner "1" --> "*" Apartment : owner
+Apartment "1" <-- "1" ApartmentDetails : details
+Apartment "1" <-- "*" Room : in
+
+class ApartmentDetails {
+    Float square
+    Integer numBathrooms
+    Integer numBedrooms
+    Boolean hasAC
+    Boolean hasElevator
+}
+    
+class Advertisement {
+    String title
+    String description
+    Double price
+}
+Property "1" <-- "*" Advertisement : about
+
+class Visit {
+    ZonedDateTime when
+}
+Advertisement "1" <-- "*" Visit : for
+Student "1" <-- "*" Visit : visitor
+
+class Review {
+    String title
+    String description
+    Double rating
+}
+Advertisement "1" <-- "*" Review : about
+
+```
