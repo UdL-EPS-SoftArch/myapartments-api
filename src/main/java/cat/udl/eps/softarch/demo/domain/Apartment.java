@@ -38,6 +38,6 @@ public class Apartment extends UriEntity<Long> {
 
     @OneToOne
     @PrimaryKeyJoinColumn
-    private ApartmentDetails details;
+    private ApartmentDetails detail;
 
 }
