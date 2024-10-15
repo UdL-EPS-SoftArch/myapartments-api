@@ -1,8 +1,10 @@
 package cat.udl.eps.softarch.demo.handler;
 
 
+import cat.udl.eps.softarch.demo.domain.Apartment;
 import cat.udl.eps.softarch.demo.domain.Owner;
 import cat.udl.eps.softarch.demo.domain.Room;
+import cat.udl.eps.softarch.demo.repository.ApartmentRepository;
 import cat.udl.eps.softarch.demo.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.LoggerFactory;
@@ -19,10 +21,10 @@ import java.util.logging.Logger;
 public class RoomEventHandler {
 
     final Logger logger = (Logger) LoggerFactory.getLogger(Room.class);
-    final RoomRepository roomRepository;
+    final ApartmentRepository apartmentRepository;
 
-    public RoomEventHandler(RoomRepository roomRepository) {
-        this.roomRepository = roomRepository;
+    public RoomEventHandler(ApartmentRepository ApartmentRepository) {
+        this.apartmentRepository = ApartmentRepository;
     }
 
 
@@ -32,7 +34,10 @@ public class RoomEventHandler {
 
         Owner owner = (Owner) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         room.setCreatedBy(owner);
-        List<Room> roomList = roomRepository.findBy
+        List<Apartment> apartmentList = apartmentRepository.findByOwner(owner);
+        if(!apartmentList.isEmpty())
+            room.setApart(apartmentList.get(0));
+        logger.info("New room created: {}" + room);
 
     }
 
