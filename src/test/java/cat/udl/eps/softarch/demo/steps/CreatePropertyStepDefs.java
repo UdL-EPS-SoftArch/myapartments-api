@@ -12,6 +12,7 @@ import cat.udl.eps.softarch.demo.repository.OwnerRepository;
 import cat.udl.eps.softarch.demo.repository.PropertyRepository;
 import cat.udl.eps.softarch.demo.repository.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,16 @@ public class CreatePropertyStepDefs {
     @Then("There is {int} Property created")
     public void thereIsPropertyCreated(int num){
         long propertyCount = propertyRepository.count();
-        assertEquals("Expected " + num + " properties, but found " + propertyCount, propertyCount, num);
+        assertEquals("Expected " + num + " properties, but found " + propertyCount, num, propertyCount);
+
+
+    }
+
+    @Then("There is {int} Property created with description {string}")
+    public void thereIsPropertyCreated(int num, String description){
+        long propertyCount = propertyRepository.findByDescription(description).size();
+
+        assertEquals("Expected " + num + " properties, but found " + propertyCount, num, propertyCount);
 
 
     }
