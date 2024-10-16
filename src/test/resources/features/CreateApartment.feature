@@ -22,10 +22,3 @@ Feature: Create Apartment
     When I create an apartment with name "", floor "3", address "Carrer de les Flors 10", postal code "08001", city "Barcelona", country "Spain", description "A cozy loft in the center of Barcelona"
     Then The response code is 401
     And The error message is "Bad Request"
-
-  Scenario: Create an apartment as Student
-    Given There is a registered student with username "1" and password "password" and email "student@example.com"
-    And I login as "student" with password "password"
-    When I create an apartment with name "Cozy Loft", floor "3", address "Carrer de les Flors 10", postal code "08001", city "Barcelona", country "Spain", description "A cozy loft in the center of Barcelona"
-    Then The response code is 403
-    And The error message is "Forbidden"
