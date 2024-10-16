@@ -10,10 +10,10 @@ Feature: Delete Room
     
   Scenario: Delete a Room with owner and room not logged in
     Given I'm not logged in
-    When I try to delete Room with user "user" and name room "testApartment"
+    When I try to delete Room with user "user" and apartment "testApartment"
     Then The response code is 401
     
   Scenario: Delete a Room with owner and room logged in
     Given I login as "user" with password "password"
-    When I try to delete Room with user "user" and name room "testApartment"
+    When I try to delete Room with user "user" and apartment "testApartment"
     Then The response code is 200
