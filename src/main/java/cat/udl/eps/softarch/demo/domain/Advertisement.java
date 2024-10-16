@@ -1,5 +1,6 @@
 package cat.udl.eps.softarch.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
@@ -7,7 +8,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 @Setter
@@ -44,6 +44,7 @@ public class Advertisement extends UriEntity<Long> {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @NotNull
     @ManyToOne
+    @JsonIdentityReference(alwaysAsId = true)
     public AdvertisementStatus adStatus;
 
 
