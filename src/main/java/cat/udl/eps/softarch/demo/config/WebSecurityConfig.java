@@ -28,6 +28,9 @@ public class WebSecurityConfig {
     protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((auth) -> auth
                         .requestMatchers(HttpMethod.GET, "/identity").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/apartments").authenticated()
+                        // .requestMatchers(HttpMethod.POST, "/apartments/").hasAnyRole("OWNER")
+                        // .requestMatchers(HttpMethod.POST, "/apartments/*").hasAnyRole("OWNER")
                         .requestMatchers(HttpMethod.POST, "/users").anonymous()
                         .requestMatchers(HttpMethod.POST, "/users/*").denyAll()
                         .requestMatchers(HttpMethod.POST, "/*/*").authenticated()
