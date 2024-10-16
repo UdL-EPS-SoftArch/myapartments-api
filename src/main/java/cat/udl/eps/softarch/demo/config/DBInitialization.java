@@ -1,4 +1,5 @@
 package cat.udl.eps.softarch.demo.config;
+import cat.udl.eps.softarch.demo.domain.Owner;
 import cat.udl.eps.softarch.demo.domain.User;
 import cat.udl.eps.softarch.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,6 +39,14 @@ public class DBInitialization {
                 user.setPassword(defaultPassword);
                 user.encodePassword();
                 userRepository.save(user);
+            }
+            if (!userRepository.existsById("owner")) {
+                Owner owner = new Owner();
+                owner.setEmail("owner@sample.app");
+                owner.setId("owner");
+                owner.setPassword(defaultPassword);
+                owner.encodePassword();
+                userRepository.save(owner);
             }
         }
     }
