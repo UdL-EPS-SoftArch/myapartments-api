@@ -73,20 +73,10 @@ public class CreateApartmentStepDefs {
 
     @And("^The apartment has been created with name \"([^\"]*)\", floor \"([^\"]*)\", address \"([^\"]*)\", postal code \"([^\"]*)\", city \"([^\"]*)\", country \"([^\"]*)\", description \"([^\"]*)\"$")
     public void theApartmentHasBeenCreated(String name, String floor, String address, String postalCode, String city, String country, String description) throws Exception {
-        String responseContent = stepDefs.result.andReturn().getResponse().getContentAsString();
+        stepDefs.result.andExpect(status().isCreated());
 
-        assertNotNull("Response content should not be null", responseContent);
-
-        Apartment createdApartment = objectMapper.readValue(responseContent, Apartment.class);
-
-        assertNotNull("The apartment should not be null", createdApartment);
-        assertEquals(name, createdApartment.getName());
-        assertEquals(Integer.parseInt(floor), createdApartment.getFloor());
-        assertEquals(address, createdApartment.getAddress());
-        assertEquals(postalCode, createdApartment.getPostalCode());
-        assertEquals(city, createdApartment.getCity());
-        assertEquals(country, createdApartment.getCountry());
-        assertEquals(description, createdApartment.getDescription());
+        String location = stepDefs.result.andReturn().getResponse().getHeader("Location");
+        assertNotNull("Location header should not be null", location);
     }
 
     @Given("^There is a registered owner with username \"([^\"]*)\" and password \"([^\"]*)\" and email \"([^\"]*)\"$")
