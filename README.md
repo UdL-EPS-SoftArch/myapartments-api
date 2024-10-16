@@ -28,4 +28,77 @@ Spring Boot project including Spring REST, HATEOAS, JPA, etc. Additional details
 
 ## Entities Model
 
-![EntityModelsDiagram](https://www.plantuml.com/plantuml/svg/5Sqn3i8m30NGdLF00LhlJ6Ne1X9InG5Cuf98YHFPFqBS7fZU-1O76qOjXrFMK4QKOmAwducCt_Ch8utdSB7G5AAOGwlqYDTflM_JrdPSB2Ig7-vigABmYNicazqf2KUdobbfLMHayLkBKkR-_nRH-FCB?v0)
+```mermaid
+classDiagram
+
+class UriEntity {
+    String uri
+}
+UriEntity <|-- Property
+UriEntity <|-- ApartmentDetails
+UriEntity <|-- Advertisement
+UriEntity <|-- Visit
+UriEntity <|-- Review
+UriEntity <|-- User
+
+class UserDetails { <<interface>> }
+
+class User {
+    String username
+    String password
+    String email
+}
+UserDetails <|.. User
+User <|-- Admin
+User <|-- Student
+User <|-- Owner
+
+class Student {
+    String phoneNumber
+    String name
+}
+
+class Property {
+    String description
+}
+Property <|-- Apartment
+Property <|-- Room
+
+class Apartment {
+    String street
+    String number
+    String city
+}
+Owner "1" --> "*" Apartment : owner
+Apartment "1" <-- "1" ApartmentDetails : details
+Apartment "1" <-- "*" Room : in
+
+class ApartmentDetails {
+    Float square
+    Integer numBathrooms
+    Integer numBedrooms
+    Boolean hasAC
+    Boolean hasElevator
+}
+    
+class Advertisement {
+    String title
+    String description
+    Double price
+}
+Property "1" <-- "*" Advertisement : about
+
+class Visit {
+    ZonedDateTime when
+}
+Advertisement "1" <-- "*" Visit : for
+Student "1" <-- "*" Visit : visitor
+
+class Review {
+    String title
+    String description
+    Double rating
+}
+Advertisement "1" <-- "*" Review : about
+
+```
