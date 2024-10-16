@@ -27,5 +27,4 @@ public class Owner extends User {
     public Collection<GrantedAuthority> getAuthorities() {
         return AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_OWNER");
     }
-
 }
