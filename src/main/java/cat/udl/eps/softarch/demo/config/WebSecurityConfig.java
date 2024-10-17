@@ -33,6 +33,7 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/apartments/*").hasAnyRole("OWNER")
                         .requestMatchers(HttpMethod.POST, "/users").anonymous()
                         .requestMatchers(HttpMethod.POST, "/users/*").denyAll()
+                        .requestMatchers(HttpMethod.POST, "/properties").hasAuthority("ROLE_OWNER")
                         .requestMatchers(HttpMethod.POST, "/*/*").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/*/*").authenticated()
                         .requestMatchers(HttpMethod.PATCH, "/*/*").authenticated()
