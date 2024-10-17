@@ -2,6 +2,7 @@ package cat.udl.eps.softarch.demo.steps;
 
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -14,9 +15,12 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 
 import java.nio.charset.StandardCharsets;
+import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public class DeleteApartmentStepDefs {
 
@@ -33,8 +37,29 @@ public class DeleteApartmentStepDefs {
     private UserRepository userRepository;
 
     @Given("^There is an apartment registered with the name \"([^\"]*)\"$")
-    public void thereIsAnApartmentRegisteredWithTheName(String name) {
+    public void thereIsAnApartmentRegisteredWithTheName(String name) throws Exception {
         List<Apartment> apartments = apartmentRepository.findByName(name);
+        if(apartments.isEmpty()) {
+            Apartment apartment = new Apartment();
+            apartment.setName(name);
+            apartment.setRegistrationDate(ZonedDateTime.now());
+
+            Optional<Owner> ownerOptional = ownerRepository.findById(AuthenticationStepDefs.currentUsername);
+
+            if (ownerOptional.isPresent()) {
+                apartment.setOwner(ownerOptional.get());
+            }
+
+            stepDefs.result = stepDefs.mockMvc.perform(
+                            post("/apartments")
+                                    .contentType(MediaType.APPLICATION_JSON)
+                                    .content(stepDefs.mapper.writeValueAsString(apartment))
+                                    .characterEncoding(StandardCharsets.UTF_8)
+                                    .with(AuthenticationStepDefs.authenticate()))
+                    .andDo(print())
+                    .andExpect(status().isCreated());
+        }
+        apartments = apartmentRepository.findByName(name);
         assertFalse("Apartment with name \"" + name + "\" should exist", apartments.isEmpty());
     }
 
