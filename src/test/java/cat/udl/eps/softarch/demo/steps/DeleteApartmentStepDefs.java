@@ -11,6 +11,7 @@ import cat.udl.eps.softarch.demo.domain.Owner;
 import cat.udl.eps.softarch.demo.repository.ApartmentRepository;
 import cat.udl.eps.softarch.demo.repository.OwnerRepository;
 import cat.udl.eps.softarch.demo.repository.UserRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
@@ -36,6 +37,9 @@ public class DeleteApartmentStepDefs {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Given("^There is an apartment registered with the name \"([^\"]*)\"$")
     public void thereIsAnApartmentRegisteredWithTheName(String name) throws Exception {
         List<Apartment> apartments = apartmentRepository.findByName(name);
@@ -53,7 +57,7 @@ public class DeleteApartmentStepDefs {
             stepDefs.result = stepDefs.mockMvc.perform(
                             post("/apartments")
                                     .contentType(MediaType.APPLICATION_JSON)
-                                    .content(stepDefs.mapper.writeValueAsString(apartment))
+                                    .content(objectMapper.writeValueAsString(apartment))
                                     .characterEncoding(StandardCharsets.UTF_8)
                                     .with(AuthenticationStepDefs.authenticate()))
                     .andDo(print())
