@@ -34,4 +34,10 @@ public class Apartment extends UriEntity<Long> {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     public List<Room> rooms;
+
+
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    private ApartmentDetails detail;
+
 }
