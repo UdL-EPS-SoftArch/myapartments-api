@@ -3,11 +3,14 @@ package cat.udl.eps.softarch.demo.domain;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
 @Setter
@@ -19,21 +22,24 @@ public class Advertisement extends UriEntity<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @NotBlank
     private String title;
 
-    @NotNull
+    @NotBlank
     private String description;
 
     @NotNull
-    @Min(value = 1, message = "El valor debe ser mayor que 0")
-    private Double price;
+    @DecimalMin(value = "0.01")
+    private BigDecimal price;
 
-    @NotNull
+    @NotBlank
     private String zipCode;
 
-    @NotNull
+    @NotBlank
     private String country;
+
+    @NotBlank
+    private String address;
 
     @NotNull
     private ZonedDateTime creationDate;
@@ -41,7 +47,6 @@ public class Advertisement extends UriEntity<Long> {
     private ZonedDateTime expirationDate;
 
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @NotNull
     @ManyToOne
     @JsonIdentityReference(alwaysAsId = true)

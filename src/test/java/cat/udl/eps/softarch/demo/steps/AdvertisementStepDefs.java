@@ -1,5 +1,6 @@
 package cat.udl.eps.softarch.demo.steps;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
@@ -13,8 +14,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
 
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -74,25 +75,24 @@ public class AdvertisementStepDefs {
 
     }
 
-    @Given("There is an existing advertisement status with id {string} and status {string}")
-    public void thereIsAnExistingAdvertisementStatusWithIdAndStatus(String id, String status) {
+    @Given("There is an existing advertisement status {string}")
+    public void thereIsAnExistingAdvertisementStatusWithIdAndStatus(String status) {
         AdvertisementStatus advertisementStatus = new AdvertisementStatus();
-        advertisementStatus.setId(Long.parseLong(id));
         advertisementStatus.setStatus(status);
         advertisementStatusRepository.save(advertisementStatus);
 
     }
 
-    @When("I create a new advertisement with title {string}, description {string}, price {string}, zipCode {string}, address {string}, status {string}")
-    public void iCreateANewAdvertisement(String title, String description, String price, String zipCode, String country, String adStatusId) throws Exception {
-        RestTemplate restTemplate = new RestTemplate();
+    @When("I create a new advertisement with title {string}, description {string}, price {string}, zipCode {string}, address {string}, country {string}, status {string}")
+    public void iCreateANewAdvertisement(String title, String description, String price, String zipCode, String adress, String country, String adStatusId) throws Exception {
         Advertisement ad = new Advertisement();
         ad.setTitle(title);
         ad.setDescription(description);
-        ad.setPrice(Double.parseDouble(price));
+        ad.setPrice(new BigDecimal(price));
         ad.setZipCode(zipCode);
+        ad.setAddress(adress);
         ad.setCountry(country);
-        AdvertisementStatus cur_status = advertisementStatusRepository.findByStatus("Available").get(0);
+        AdvertisementStatus cur_status = advertisementStatusRepository.findByStatus("Available").stream().findFirst().orElse(null);
         ad.setAdStatus(cur_status);
 
 
@@ -110,5 +110,10 @@ public class AdvertisementStepDefs {
     public void theAdvertisementHasBeenCreatedWithTitle(String title) {
         Advertisement createdAd = advertisementRepository.findByTitle(title).get(0);
         assertEquals(title, createdAd.getTitle());
+    }
+
+    @Then("It has not been created an advertisement")
+    public void it_has_not_been_created_an_advertisement() {
+        assertEquals(0, advertisementRepository.count());
     }
 }
