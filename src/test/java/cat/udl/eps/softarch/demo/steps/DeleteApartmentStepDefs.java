@@ -83,18 +83,4 @@ public class DeleteApartmentStepDefs {
         List<Apartment> apartments = apartmentRepository.findByAddress(address);
         assertTrue("Apartment with address \"" + address + "\" should no longer exist", apartments.isEmpty());
     }
-
-    @Given("^There is a registered owner with username \"([^\"]*)\" and password \"([^\"]*)\" and email \"([^\"]*)\"$")
-    public void thereIsARegisteredOwnerWithUsernameAndPasswordAndEmail(String username, String password, String email) {
-        if (!userRepository.existsById(username)) {
-            Owner owner = new Owner();
-            owner.setId(username);
-            owner.setPassword(password);
-            owner.setEmail(email);
-            owner.setName("Owner Name");
-            owner.setPhoneNumber("123456789");
-            owner.encodePassword();
-            ownerRepository.save(owner);
-        }
-    }
 }
