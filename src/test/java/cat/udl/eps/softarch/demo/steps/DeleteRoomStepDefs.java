@@ -44,7 +44,7 @@ public class DeleteRoomStepDefs {
     @When("I try to delete Room with user {string} and apartment {string}")
     public void iTryToDeleteRoomWithUserAndApartment(String userId, String apartmentName) throws Throwable {
         Owner owner = ownerRepository.findById(userId).get();
-        Apartment apartment = ApartmentUtils.getRoomByTitle(apartmentRepository, apartmentName);
+        Apartment apartment = ApartmentUtils.getRoomByTitle(roomRepository, apartmentName);
         Room room = RoomUtils.getRoom(roomRepository, apartment, owner);
         stepDefs.result = stepDefs.mockMvc.perform(
                 delete(room.getUri())
