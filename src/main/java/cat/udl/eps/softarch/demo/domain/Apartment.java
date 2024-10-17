@@ -1,5 +1,6 @@
 package cat.udl.eps.softarch.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
@@ -28,10 +29,13 @@ public class Apartment extends UriEntity<Long> {
     private ZonedDateTime registrationDate;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JsonIdentityReference(alwaysAsId = true)
     private Owner owner;
-
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     public List<Room> rooms;
+
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    private ApartmentDetails detail;
 }
