@@ -25,7 +25,6 @@ public class Owner extends User {
     @Override
     @ElementCollection
     public Collection<GrantedAuthority> getAuthorities() {
-        return AuthorityUtils.commaSeparatedStringToAuthorityList("OWNER");
+        return AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_OWNER");
     }
-
 }

@@ -2,6 +2,7 @@ package cat.udl.eps.softarch.demo.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -25,4 +26,6 @@ public class ApartmentDetails extends UriEntity<Long> {
     private boolean hasAC;
     private boolean hasElevator;
 
+    @OneToOne
+    private Apartment apartment;
 }
