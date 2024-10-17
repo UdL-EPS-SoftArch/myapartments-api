@@ -8,6 +8,8 @@ import cat.udl.eps.softarch.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import jakarta.annotation.PostConstruct;
+
+import java.math.BigDecimal;
 import java.util.Arrays;
 import cat.udl.eps.softarch.demo.domain.Advertisement;
 import cat.udl.eps.softarch.demo.repository.AdvertisementRepository;
@@ -57,7 +59,7 @@ public class DBInitialization {
             advertisement.setId(1L);
             advertisement.setTitle("Demo");
             advertisement.setDescription("Demo");
-            advertisement.setPrice(1.0);
+            advertisement.setPrice(BigDecimal.ONE);
             advertisementRepository.save(advertisement);
         }
         if (Arrays.asList(activeProfiles.split(",")).contains("test")) {
