@@ -58,6 +58,32 @@ public class DeleteApartmentStepDefs {
         assertTrue("Apartment with name \"" + name + "\" should no longer exist", apartments.isEmpty());
     }
 
+    @Given("^There is an apartment registered with the address \"([^\"]*)\"$")
+    public void thereIsAnApartmentRegisteredWithTheAddress(String address) {
+        List<Apartment> apartments = apartmentRepository.findByAddress(address);
+        assertFalse("Apartment with address \"" + address + "\" should exist", apartments.isEmpty());
+    }
+
+    @When("^I delete the apartment with address \"([^\"]*)\"$")
+    public void iDeleteTheApartmentWithAddress(String address) throws Exception {
+        List<Apartment> apartments = apartmentRepository.findByAddress(address);
+        assertFalse("Apartment with address \"" + address + "\" should exist", apartments.isEmpty());
+        Apartment apartment = apartments.get(0);
+
+        stepDefs.result = stepDefs.mockMvc.perform(
+                        delete("/apartments/" + apartment.getId())
+                                .characterEncoding(StandardCharsets.UTF_8)
+                                .with(AuthenticationStepDefs.authenticate()))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+    }
+
+    @And("^The apartment with address \"([^\"]*)\" no longer exists$")
+    public void theApartmentWithAddressNoLongerExists(String address) {
+        List<Apartment> apartments = apartmentRepository.findByAddress(address);
+        assertTrue("Apartment with address \"" + address + "\" should no longer exist", apartments.isEmpty());
+    }
+
     @Given("^There is a registered owner with username \"([^\"]*)\" and password \"([^\"]*)\" and email \"([^\"]*)\"$")
     public void thereIsARegisteredOwnerWithUsernameAndPasswordAndEmail(String username, String password, String email) {
         if (!userRepository.existsById(username)) {
