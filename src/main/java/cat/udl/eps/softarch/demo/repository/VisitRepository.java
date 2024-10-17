@@ -1,6 +1,8 @@
 package cat.udl.eps.softarch.demo.repository;
 
 
+import cat.udl.eps.softarch.demo.domain.Advertisement;
+import cat.udl.eps.softarch.demo.domain.Apartment;
 import cat.udl.eps.softarch.demo.domain.Visit;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -14,4 +16,5 @@ public interface VisitRepository extends CrudRepository<Visit, Long>, PagingAndS
 
     Optional<Visit> findById(@Param("id") Long id);
     List<Visit> findByWhen(@Param("when") ZonedDateTime when);
+    List<Visit> findByAdvertisement(@Param("advertisement") Advertisement advertisement);
 }

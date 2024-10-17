@@ -1,5 +1,7 @@
 package cat.udl.eps.softarch.demo.config;
+import cat.udl.eps.softarch.demo.domain.Advertisement;
 import cat.udl.eps.softarch.demo.domain.User;
+import cat.udl.eps.softarch.demo.repository.AdvertisementRepository;
 import cat.udl.eps.softarch.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -13,9 +15,11 @@ public class DBInitialization {
     @Value("${spring.profiles.active:}")
     private String activeProfiles;
     private final UserRepository userRepository;
+    private final AdvertisementRepository advertisementRepository;
 
-    public DBInitialization(UserRepository userRepository) {
+    public DBInitialization(UserRepository userRepository, AdvertisementRepository advertisementRepository) {
         this.userRepository = userRepository;
+        this.advertisementRepository = advertisementRepository;
     }
 
     @PostConstruct
@@ -29,6 +33,17 @@ public class DBInitialization {
             user.encodePassword();
             userRepository.save(user);
         }
+
+        // Advertisement
+        if (!advertisementRepository.existsById(1L)) {
+            Advertisement advertisement = new Advertisement();
+            advertisement.setId(1L);
+            advertisement.setTitle("Demo");
+            advertisement.setDescription("Demo");
+            advertisement.setPrice(1.0);
+            advertisementRepository.save(advertisement);
+        }
+
         if (Arrays.asList(activeProfiles.split(",")).contains("test")) {
             // Testing instances
             if (!userRepository.existsById("test")) {
