@@ -13,20 +13,26 @@ public class RoomUtils {
         return roomList.get(0);
     }
 
-    public static Room getRoom(RoomRepository roomRepository, Apartment apartment, Owner owner) {
-        List<Room> roomList = roomRepository.findByCreatedByAndApart(owner, apartment);
+    public static Room getRoom(RoomRepository roomRepository,Apartment apartment) {
+        List<Room> roomList = roomRepository.findByApart(apartment);
         if (roomList.isEmpty()) {
             return new Room();
         }
         return roomList.get(0);
     }
 
-    public static Room buildRoom(String surface, String IsOccupied, String HasWindow, String HasDesk, String HasBed, Owner owner, Apartment apart) {
+    public static Room buildRoom(String surface, String IsOccupied, String HasWindow, String HasDesk, String HasBed) {
         int parsed_surface = Integer.parseInt(surface);
         boolean isOccupied = Boolean.parseBoolean(IsOccupied);
         boolean hasWindow = Boolean.parseBoolean(HasWindow);
         boolean hasDesk = Boolean.parseBoolean(HasDesk);
         boolean hasBed = Boolean.parseBoolean(HasBed);
-        return Room.builder().surface(parsed_surface).isOccupied(isOccupied).hasDesk(hasDesk).hasBed(hasBed).hasWindow(hasWindow).apart(apart).createdBy(owner).build();
+        Room room = new Room();
+        room.setSurface(parsed_surface);
+        room.setOccupied(isOccupied);
+        room.setHasWindow(hasWindow);
+        room.setHasDesk(hasDesk);
+        room.setHasBed(hasBed);
+        return room;
     }
 }

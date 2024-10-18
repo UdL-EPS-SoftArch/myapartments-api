@@ -34,8 +34,13 @@ public class CreateRoomStepDefs {
         Apartment apart = apartmentRepository.findByName(ApartmentName).get(0);
         if(owner_list_by_userid.isPresent()) {
             Owner owner = owner_list_by_userid.get();
-            Room room = RoomUtils.buildRoom(surface,IsOccupied,HasWindow,HasDesk,HasBed,owner,apart);
+            Room room = RoomUtils.buildRoom(surface,IsOccupied,HasWindow,HasDesk,HasBed);
+            room.setApart(apart);
+            room.setOwner(owner);
             roomRepository.save(room);
         }
+
+
+
     }
 }

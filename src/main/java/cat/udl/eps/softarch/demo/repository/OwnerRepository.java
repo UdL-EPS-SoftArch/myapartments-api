@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OwnerRepository extends CrudRepository<Owner, String>, PagingAndSortingRepository<Owner, String> {
-    @NotNull Optional<Owner> findById(@NotNull @Param("id") String id);
+    Optional<Owner> findById(@Param("id") String id);
     List<Owner> findByName(@Param("name") String name);
 
     // List<Owner> findByPhone(@Param("phoneNumber") String phoneNumber);

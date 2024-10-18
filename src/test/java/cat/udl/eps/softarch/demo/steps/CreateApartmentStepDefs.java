@@ -84,11 +84,10 @@ public class CreateApartmentStepDefs {
     public void thereIsAApartmentWithTheNameFloorAddressPostalCodeCityCountryDescriptionAndACreationDateByOwnerUsername(String name, String floor, String address, String postal_code, String city, String country, String description, String creation_date, String owner_user) {
 
         Optional<Owner> owners_list = ownerRepository.findById(owner_user);
-        if(owners_list.isPresent()) {
-            Owner apart_owner = owners_list.get();
-            Apartment apartment = ApartmentUtils.buildApartment(name,floor,address,postal_code,city,country,description,creation_date,apart_owner);
-            apartmentRepository.save(apartment);
-        }
+        Owner apart_owner = owners_list.get();
+        Apartment apartment = ApartmentUtils.buildApartment(name,floor,address,postal_code,city,country,description,creation_date);
+        apartment.setOwner(apart_owner);
+        apartmentRepository.save(apartment);
 
     }
 }

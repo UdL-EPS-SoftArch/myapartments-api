@@ -16,9 +16,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 public class DeleteRoomStepDefs {
+
+    @Autowired
     private StepDefs stepDefs;
+    @Autowired
     private ApartmentRepository apartmentRepository;
+    @Autowired
     private OwnerRepository ownerRepository;
+    @Autowired
     private RoomRepository roomRepository;
 
     @When("I try to delete Room with id {long}")
@@ -36,15 +41,14 @@ public class DeleteRoomStepDefs {
 
     }
 
-    @When("I try to delete Room with owner {string} and apartment {string}")
-    public void iTryToDeleteRoomWithOwnerAndApartment(String userId, String apartmentName) throws Throwable {
-        Owner owner = ownerRepository.findById(userId).get();
-        Apartment apartment = ApartmentUtils.getRoomByTitle(apartmentRepository, apartmentName);
-        Room room = RoomUtils.getRoom(roomRepository, apartment, owner);
+    @When("I try to delete Room with of the apartment {string}")
+    public void iTryToDeleteRoomWithOwnerAndApartment(String apartmentName) throws Throwable {
+        Apartment apartment = apartmentRepository.findByName(apartmentName).get(0);
+        Room room = RoomUtils.getRoom(roomRepository, apartment);
         stepDefs.result = stepDefs.mockMvc.perform(
-                delete(room.getUri())
-                        .accept(MediaType.APPLICATION_JSON)
-                        .with(AuthenticationStepDefs.authenticate()))
+                        delete((room == null?"":room.getUri()))
+                                .accept(MediaType.APPLICATION_JSON)
+                                .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print());
     }
 }

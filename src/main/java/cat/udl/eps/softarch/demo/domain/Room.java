@@ -16,8 +16,6 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-
-
 public class Room extends UriEntity<Long> {
     @Id
     private Long id;
@@ -28,12 +26,10 @@ public class Room extends UriEntity<Long> {
     private boolean hasBed;
 
 
-    @ManyToOne()
+    @ManyToOne
     private Apartment apart;
 
     @ManyToOne
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @NotNull
-    public Owner createdBy;
+    private Owner owner;
 
 }
