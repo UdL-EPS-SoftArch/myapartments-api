@@ -4,16 +4,16 @@ Feature: Delete Room
   I must be able to delete Room
 
   Background:
-    Given There is a registered user with username "user" and password "password" and email "user@sample.app"
-    Given There is a apartment with a name "testApartment", floor "0", address "roomAddressX", postal code "postalCodeX", city "cityX", country "countryX", description "roomDescriptionX" and a creation date "2024-10-10"
-    Given There is a room with surface "soft", is occuped "true", has window "true", has desk "false" and have bed "true"
+    Given There is a registered owner with username "owner" and password "password" and email "owner@example.com"
+    Given There is a apartment with the name "testApartment", floor "0", address "roomAddressX", postal code "postalCodeX", city "cityX", country "countryX", description "roomDescriptionX" and a creation date "2024-10-18T17:44:30.551316+00:00" by owner username "owner"
+    Given There is a room with surface "soft", is occupied "true", has window "true", has desk "false" and have bed "true", by owner username "user" and the apartment_name "testApartment"
     
   Scenario: Delete a Room with owner and room not logged in
     Given I'm not logged in
-    When I try to delete Room with user "user" and apartment "testApartment"
+    When I try to delete Room with owner "owner" and apartment "testApartment"
     Then The response code is 401
     
   Scenario: Delete a Room with owner and room logged in
-    Given I login as "user" with password "password"
-    When I try to delete Room with user "user" and apartment "testApartment"
+    Given I login as "owner" with password "password"
+    When I try to delete Room with owner "owner" and apartment "testApartment"
     Then The response code is 200

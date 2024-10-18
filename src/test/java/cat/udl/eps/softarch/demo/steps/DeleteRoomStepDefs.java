@@ -21,11 +21,6 @@ public class DeleteRoomStepDefs {
     private OwnerRepository ownerRepository;
     private RoomRepository roomRepository;
 
-    @When("I delete Room with a surface {int}, is occuped {boolean}, has window {boolean}, has desk {boolean} and have bed {boolean}")
-    public void iDeleteRoomWithSurfaceIsOccupedHasWindowHasDeskAndHaveBed(Integer int1, Boolean bool1, Boolean bool2, Boolean bool3, Boolean bool4) {
-
-    }
-
     @When("I try to delete Room with id {long}")
     public void iTryToDeleteRoomWithUserAndRoomName(Long roomId) throws Throwable {
         Room room = RoomUtils.getRoom(roomRepository, roomId);
@@ -41,8 +36,8 @@ public class DeleteRoomStepDefs {
 
     }
 
-    @When("I try to delete Room with user {string} and apartment {string}")
-    public void iTryToDeleteRoomWithUserAndApartment(String userId, String apartmentName) throws Throwable {
+    @When("I try to delete Room with owner {string} and apartment {string}")
+    public void iTryToDeleteRoomWithOwnerAndApartment(String userId, String apartmentName) throws Throwable {
         Owner owner = ownerRepository.findById(userId).get();
         Apartment apartment = ApartmentUtils.getRoomByTitle(apartmentRepository, apartmentName);
         Room room = RoomUtils.getRoom(roomRepository, apartment, owner);

@@ -79,17 +79,19 @@ public class CreateApartmentStepDefs {
         assertNotNull("Location header should not be null", location);
     }
 
-    @Given("^There is a registered owner with username \"([^\"]*)\" and password \"([^\"]*)\" and email \"([^\"]*)\"$")
-    public void thereIsARegisteredOwnerWithUsernameAndPasswordAndEmail(String username, String password, String email) {
-        if (!userRepository.existsById(username)) {
-            Owner owner = new Owner();
-            owner.setId(username);
-            owner.setPassword(password);
-            owner.setEmail(email);
-            owner.setName("Owner Name");
-            owner.setPhoneNumber("123456789");
-            owner.encodePassword();
-            ownerRepository.save(owner);
+
+    @Given("There is a apartment with the name {string}, floor {string}, address {string}, postal code {string}, city {string}, country {string}, description {string} and a creation date {string} by owner username {string}")
+    public void thereIsAApartmentWithTheNameFloorAddressPostalCodeCityCountryDescriptionAndACreationDateByOwnerUsername(String name, String floor, String address, String postal_code, String city, String country, String description, String creation_date, String owner_user) {
+
+        Optional<Owner> owners_list = ownerRepository.findById(owner_user);
+        if(owners_list.isPresent()) {
+            Owner apart_owner = owners_list.get();
+            Apartment apartment = ApartmentUtils.buildApartment(name,floor,address,postal_code,city,country,description,creation_date,apart_owner);
+            apartmentRepository.save(apartment);
         }
+
     }
 }
+
+
+

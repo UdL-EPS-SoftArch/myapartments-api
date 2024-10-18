@@ -1,4 +1,6 @@
-package cat.udl.eps.softarch.demo.handler;
+
+
+/* package cat.udl.eps.softarch.demo.handler;
 
 
 import cat.udl.eps.softarch.demo.domain.Apartment;
@@ -23,15 +25,13 @@ public class RoomEventHandler {
     final Logger logger = (Logger) LoggerFactory.getLogger(Room.class);
     final ApartmentRepository apartmentRepository;
 
-    public RoomEventHandler(ApartmentRepository ApartmentRepository) {
-        this.apartmentRepository = ApartmentRepository;
+    public RoomEventHandler(ApartmentRepository apartmentRepository) {
+        this.apartmentRepository = apartmentRepository;
     }
 
 
     @HandleBeforeCreate
     public void handleBeforeCreate(Room room) {
-
-
         Owner owner = (Owner) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         room.setCreatedBy(owner);
         List<Apartment> apartmentList = apartmentRepository.findByOwner(owner);
@@ -43,4 +43,4 @@ public class RoomEventHandler {
 
 
 
-}
+} */
