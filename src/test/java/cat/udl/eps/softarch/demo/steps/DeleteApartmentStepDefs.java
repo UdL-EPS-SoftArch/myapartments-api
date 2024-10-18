@@ -88,7 +88,7 @@ public class DeleteApartmentStepDefs {
         List<Apartment> apartments = apartmentRepository.findByName(name);
         assertTrue("Apartment with name \"" + name + "\" should no longer exist", apartments.isEmpty());
     }
-
+/*
     @Given("^There is an apartment registered with the address \"([^\"]*)\"$")
     public void thereIsAnApartmentRegisteredWithTheAddress(String address) {
         List<Apartment> apartments = apartmentRepository.findByAddress(address);
@@ -113,5 +113,5 @@ public class DeleteApartmentStepDefs {
     public void theApartmentWithAddressNoLongerExists(String address) {
         List<Apartment> apartments = apartmentRepository.findByAddress(address);
         assertTrue("Apartment with address \"" + address + "\" should no longer exist", apartments.isEmpty());
-    }
+    }*/
 }

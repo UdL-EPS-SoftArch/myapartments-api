@@ -4,7 +4,7 @@ Feature: Delete Apartment
   I want to delete apartments
 
   Scenario: Delete an apartment as Owner
-    Given There is a registered owner with username "owner" and password "password" and email "owner@example.com"
+    Given There is an apartment registered with the name "Cozy Loft"
     And I login as "owner" with password "password"
     When I delete the apartment with name "Cozy Loft"
     Then The response code is 201
