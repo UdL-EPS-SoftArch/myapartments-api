@@ -7,7 +7,9 @@ import cat.udl.eps.softarch.demo.repository.ApartmentRepository;
 import cat.udl.eps.softarch.demo.repository.OwnerRepository;
 import cat.udl.eps.softarch.demo.repository.RoomRepository;
 import cat.udl.eps.softarch.demo.repository.UserRepository;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
@@ -39,8 +41,13 @@ public class CreateRoomStepDefs {
             room.setOwner(owner);
             roomRepository.save(room);
         }
+    }
+
+    @When("I create a Room with name {string}, occupied {string}, window {string}, desk {string} and bed {string}")
 
 
-
+    @And("I don't have any Room")
+    public void iDontHaveAnyRoomCreate() {
+        roomRepository.deleteAll();
     }
 }

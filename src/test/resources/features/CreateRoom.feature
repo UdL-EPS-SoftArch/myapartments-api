@@ -9,46 +9,46 @@ Feature: Create Room
 
   Scenario: Create a new Room while logged in
     Given I login as "owner" with password "password"
-    When I create a Room with name "RoomWithDefaultAttributes" and occupied "false" and window "false" and desk "false", and bed "false"
+    When I create a Room with name "RoomWithDefaultAttributes", occupied "false", window "false", desk "false" and bed "false"
     Then The response code is 201
 
   Scenario: Create a Room without being logged in
     Given I'm not logged in
-    When I create a Room with name "test1", occupied "false", window "false", desk "false", bed "false"
+    When I create a Room with name "test1", occupied "false", window "false", desk "false" and bed "false"
     Then The response code is 401
     And The error message is "Unauthorized"
 
   Scenario: Create a occupied Room while logged in
     Given I login as "owner" with password "password"
     And I don't have any Room
-    When I create a Room with name "test2", occupied "true", window "false", desk "false", bed "false"
+    When I create a Room with name "test2", occupied "true", window "false", desk "false" and bed "false"
     Then The response code is 400
     And The error message is "occupied cannot be false"
 
   Scenario: Create a Room with windowRoom while logged in
     Given I login as "owner" with password "password"
     And I don't have any Room
-    When I create a Room with name "test3", occupied "false", window "true" desk "false", bed "false"
+    When I create a Room with name "test3", occupied "false", window "true", desk "false" and bed "false"
     Then The response code is 400
     And The error message is "Window cannot be false"
 
   Scenario: Create a Room with bed while logged in
     Given I login as "owner" with password "password"
     And I don't have any Room
-    When I create a Room with name "test4", occupied "false", window "false" and desk "false", and bed "true"
+    When I create a Room with name "test4", occupied "false", window "false", desk "false" and bed "true"
     Then The response code is 400
     And The error message is "Bed  cannot be false"
 
   Scenario: Create a Room with window and bed while logged in
     Given I login as "owner" with password "password"
     And I don't have any Room
-    When I create a Room with name "test5", occupied "false", window "true" and desk "false", and bed "true"
+    When I create a Room with name "test5", occupied "false", window "true", desk "false" and bed "true"
     Then The response code is 400
     And The error message is "Window and Bed cannot be false"
 
   Scenario: Create a occupied Room with window and bed while logged in
     Given I login as "owner" with password "password"
     And I don't have any Room
-    When I create a Room with name "test6", occupied "true", window "true", desk "false", bed "true"
+    When I create a Room with name "test6", occupied "true", window "true", desk "false" and bed "true"
     Then The response code is 400
     And The error message is "occupied, window and bed cannot be false"
