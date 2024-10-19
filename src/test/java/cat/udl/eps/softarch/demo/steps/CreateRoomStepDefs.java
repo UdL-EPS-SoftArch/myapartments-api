@@ -44,7 +44,13 @@ public class CreateRoomStepDefs {
     }
 
     @When("I create a Room with name {string}, occupied {string}, window {string}, desk {string} and bed {string}")
-
+    public void iCreateARoomWithDetails(String name, String occupied, String window, String desk, String bed) throws Exception {
+        Room room = new Room();
+        room.setOccupied(Boolean.parseBoolean(occupied));
+        room.setHasWindow(Boolean.parseBoolean(window));
+        room.setHasDesk(Boolean.parseBoolean(desk));
+        room.setHasBed(Boolean.parseBoolean(bed));
+    }
 
     @And("I don't have any Room")
     public void iDontHaveAnyRoomCreate() {
