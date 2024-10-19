@@ -5,7 +5,7 @@ Feature: Create Room
 
   Background:
     Given There is a registered owner with username "owner" and password "password" and email "owner@example.com"
-    Given There is apartment with name "test" and floor "2", address "123 Wall Street", postalCode "10005", city "New York" and country "United States of America", description "...", registrationDate "2024-10-16T10:30:00-04:00" by owner the username "test"
+    Given There is apartment with name "test", floor "2", address "123 Wall Street", postal code "10005", city "New York", country "United States of America", description "..." and a creation date "2024-10-16T10:30:00-04:00" by owner username "test"
 
   Scenario: Create a new Room while logged in
     Given I login as "owner" with password "password"
@@ -38,3 +38,17 @@ Feature: Create Room
     When I create a Room with name "test4", occupied "false", window "false" and desk "false", and bed "true"
     Then The response code is 400
     And The error message is "Bed  cannot be false"
+
+  Scenario: Create a Room with window and bed while logged in
+    Given I login as "owner" with password "password"
+    And I don't have any Room
+    When I create a Room with name "test5", occupied "false", window "true" and desk "false", and bed "true"
+    Then The response code is 400
+    And The error message is "Window and Bed cannot be false"
+
+  Scenario: Create a occupied Room with window and bed while logged in
+    Given I login as "owner" with password "password"
+    And I don't have any Room
+    When I create a Room with name "test6", occupied "true", window "true", desk "false", bed "true"
+    Then The response code is 400
+    And The error message is "occupied, window and bed cannot be false"
