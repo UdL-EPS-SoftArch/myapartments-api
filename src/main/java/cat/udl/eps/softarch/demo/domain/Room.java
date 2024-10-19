@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -20,6 +21,7 @@ public class Room extends UriEntity<Long> {
     @Id
     private Long id;
     private int surface;
+    @ColumnDefault("false")
     private boolean isOccupied;
     private boolean hasWindow;
     private boolean hasDesk;
