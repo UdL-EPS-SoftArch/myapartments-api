@@ -6,11 +6,12 @@ import cat.udl.eps.softarch.demo.domain.Room;
 import cat.udl.eps.softarch.demo.repository.RoomRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class RoomUtils {
     public static Room getRoom(RoomRepository roomRepository, Long roomId) {
-        List<Room> roomList = roomRepository.findById(roomId);
-        return roomList.get(0);
+        Optional<Room> roomList = roomRepository.findById(roomId);
+        return roomList.get();
     }
 
     public static Room getRoom(RoomRepository roomRepository,Apartment apartment) {

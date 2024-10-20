@@ -9,18 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class ApartmentUtils {
-    public static Apartment getApartmentByName(ApartmentRepository apartmentRepository, String apartmentName) {
-        List<Apartment> apartmentList = (List<Apartment>) apartmentRepository.findByName(apartmentName);
-        Optional<Apartment> apartment = null;
-        if (!apartmentList.isEmpty()) {
-            apartment = apartmentList.stream().findFirst();
-        }
-        if (apartment == null) {
-            return null;
-        } else {
-            return apartment.get();
-        }
-    }
+
 
     public static Apartment buildApartment(String name, String floor, String address, String PostalCode, String city, String country, String description, String date) {
         int parsedFloor = Integer.parseInt(floor);

@@ -10,6 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.springframework.security.web.SecurityFilterChain;
@@ -38,7 +39,7 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.PATCH, "/*/*").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/*/*").authenticated()
                         .anyRequest().permitAll())
-                .csrf((csrf) -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .cors((cors) -> cors.configurationSource(corsConfigurationSource()))
                 .httpBasic((httpBasic) -> httpBasic.realmName("demo"));
