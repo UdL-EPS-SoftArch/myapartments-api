@@ -62,8 +62,6 @@ public class DeleteApartmentStepDefs {
                                     .with(AuthenticationStepDefs.authenticate()))
                     .andDo(print())
                     .andExpect(status().isCreated());
-
-            apartmentRepository.save(apartment);
         }
         apartments = apartmentRepository.findByName(name);
         assertFalse("Apartment with name \"" + name + "\" should exist", apartments.isEmpty());
