@@ -41,7 +41,7 @@ public class DeleteRoomStepDefs {
 
     }
 
-    @When("I try to delete Room with of the apartment {string}")
+    @When("I try to delete Room of the apartment {string}")
     public void iTryToDeleteRoomWithOwnerAndApartment(String apartmentName) throws Throwable {
         Apartment apartment = apartmentRepository.findByName(apartmentName).get(0);
         Room room = RoomUtils.getRoom(roomRepository, apartment);
