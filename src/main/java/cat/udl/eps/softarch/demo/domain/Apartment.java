@@ -34,7 +34,7 @@ public class Apartment extends UriEntity<Long> {
     @JsonIdentityReference(alwaysAsId = true)
     private Owner owner;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
     public List<Room> rooms;
 
     @OneToOne

@@ -28,10 +28,9 @@ public class Room extends UriEntity<Long> {
     private boolean hasBed;
 
 
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @NotNull
     @ManyToOne
+    @JsonIdentityReference(alwaysAsId = true)
+    @NotNull
     private Apartment apart;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

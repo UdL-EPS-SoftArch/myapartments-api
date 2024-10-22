@@ -1,7 +1,7 @@
 Feature: Create Room
   In order to use the app
   As a user
-  I must be able to create Romm
+  I must be able to create Room
 
   Background:
     Given There is a registered owner with username "owner1" and password "password" and email "owner1@sample.app"
