@@ -10,6 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.springframework.security.web.SecurityFilterChain;
@@ -28,16 +29,19 @@ public class WebSecurityConfig {
     protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((auth) -> auth
                         .requestMatchers(HttpMethod.GET, "/identity").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/apartments").hasAuthority("ROLE_OWNER")
+                        .requestMatchers(HttpMethod.POST, "/apartments/").hasAnyRole("OWNER")
+                        .requestMatchers(HttpMethod.POST, "/apartments/*").hasAnyRole("OWNER")
                         .requestMatchers(HttpMethod.POST, "/users").anonymous()
                         .requestMatchers(HttpMethod.POST, "/users/*").denyAll()
-                        .requestMatchers(HttpMethod.POST, "/apartments").hasAnyRole("OWNER")
-                        .requestMatchers(HttpMethod.POST, "/apartments/*").hasAnyRole("OWNER")
+                        .requestMatchers(HttpMethod.POST, "/rooms").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/rooms/*").hasAnyRole("OWNER")
                         .requestMatchers(HttpMethod.POST, "/*/*").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/*/*").authenticated()
                         .requestMatchers(HttpMethod.PATCH, "/*/*").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/*/*").authenticated()
                         .anyRequest().permitAll())
-                .csrf((csrf) -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .cors((cors) -> cors.configurationSource(corsConfigurationSource()))
                 .httpBasic((httpBasic) -> httpBasic.realmName("demo"));

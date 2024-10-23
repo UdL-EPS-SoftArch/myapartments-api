@@ -14,7 +14,7 @@ import java.time.ZonedDateTime;
 @Setter
 @Getter
 @Entity
-public class AdvertisementStatus {
+public class AdvertisementStatus extends UriEntity<Long>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
