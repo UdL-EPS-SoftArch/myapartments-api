@@ -42,7 +42,7 @@ public class DeleteRoomStepDefs {
     }
 
     @When("I try to delete Room of the apartment {string}")
-    public void iTryToDeleteRoomWithOwnerAndApartment(String apartmentName) throws Throwable {
+    public void iTryToDeleteRoomOfTheApartment(String apartmentName) throws Throwable {
         Apartment apartment = apartmentRepository.findByName(apartmentName).get(0);
         Room room = RoomUtils.getRoom(roomRepository, apartment);
         stepDefs.result = stepDefs.mockMvc.perform(
