@@ -10,6 +10,7 @@ import cat.udl.eps.softarch.demo.domain.Owner;
 import cat.udl.eps.softarch.demo.repository.ApartmentRepository;
 import cat.udl.eps.softarch.demo.repository.OwnerRepository;
 import cat.udl.eps.softarch.demo.repository.UserRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -79,17 +80,18 @@ public class CreateApartmentStepDefs {
         assertNotNull("Location header should not be null", location);
     }
 
-    @Given("^There is a registered owner with username \"([^\"]*)\" and password \"([^\"]*)\" and email \"([^\"]*)\"$")
-    public void thereIsARegisteredOwnerWithUsernameAndPasswordAndEmail(String username, String password, String email) {
-        if (!userRepository.existsById(username)) {
-            Owner owner = new Owner();
-            owner.setId(username);
-            owner.setPassword(password);
-            owner.setEmail(email);
-            owner.setName("Owner Name");
-            owner.setPhoneNumber("123456789");
-            owner.encodePassword();
-            ownerRepository.save(owner);
-        }
+
+    @Given("There is a apartment with the name {string}, floor {string}, address {string}, postal code {string}, city {string}, country {string}, description {string} and a creation date {string} by owner username {string}")
+    public void thereIsAApartmentWithTheNameFloorAddressPostalCodeCityCountryDescriptionAndACreationDateByOwnerUsername(String name, String floor, String address, String postal_code, String city, String country, String description, String creation_date, String owner_user) throws Exception {
+
+        Optional<Owner> owners_list = ownerRepository.findById(owner_user);
+
+        Apartment apartment = ApartmentUtils.buildApartment(name,floor,address,postal_code,city,country,description,creation_date);
+        owners_list.ifPresent(apartment::setOwner);
+        apartmentRepository.save(apartment);
+
     }
 }
+
+
+

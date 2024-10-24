@@ -3,11 +3,11 @@ package cat.udl.eps.softarch.demo.domain;
 import cat.udl.eps.softarch.demo.domain.UriEntity;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -15,19 +15,27 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-
-
 public class Room extends UriEntity<Long> {
     @Id
+    @GeneratedValue
     private Long id;
     private int surface;
+
+    @ColumnDefault("false")
     private boolean isOccupied;
     private boolean hasWindow;
     private boolean hasDesk;
     private boolean hasBed;
 
 
-    @ManyToOne()
+    @ManyToOne
+    @JsonIdentityReference(alwaysAsId = true)
+    @NotNull
     private Apartment apart;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @NotNull
+    @ManyToOne
+    private Owner owner;
 
 }
