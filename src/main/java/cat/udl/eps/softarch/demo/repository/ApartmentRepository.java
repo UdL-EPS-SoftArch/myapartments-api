@@ -21,4 +21,5 @@ public interface ApartmentRepository extends CrudRepository<Apartment, Long>, Pa
     List<Apartment> findByRegistrationDate(@Param("registrationDate") Date registrationDate);
     List<Apartment> findByName(@Param("name") String name);
     List<Apartment> findByOwner(@Param("owner") Owner owner);
+    List<Apartment> findByAddress(@Param("address") String address);
 }
