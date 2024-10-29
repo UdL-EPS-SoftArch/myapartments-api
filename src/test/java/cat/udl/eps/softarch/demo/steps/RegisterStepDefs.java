@@ -7,7 +7,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import cat.udl.eps.softarch.demo.domain.Owner;
 import cat.udl.eps.softarch.demo.domain.User;
+import cat.udl.eps.softarch.demo.repository.OwnerRepository;
 import cat.udl.eps.softarch.demo.repository.UserRepository;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -27,6 +29,9 @@ public class RegisterStepDefs {
   @Autowired
   private UserRepository userRepository;
 
+  @Autowired
+  private OwnerRepository ownerRepository;
+
   @Given("^There is no registered user with username \"([^\"]*)\"$")
   public void thereIsNoRegisteredUserWithUsername(String user) {
     Assert.assertFalse("User \""
@@ -43,6 +48,19 @@ public class RegisterStepDefs {
       user.setPassword(password);
       user.encodePassword();
       userRepository.save(user);
+    }
+  }
+
+
+  @Given("^There is a registered owner with username \"([^\"]*)\" and password \"([^\"]*)\" and email \"([^\"]*)\"$")
+  public void thereIsARegisteredOwnerWithUsernameAndPasswordAndEmail(String username, String password, String email) {
+    if (!ownerRepository.existsById(username)) {
+      Owner user = new Owner();
+      user.setEmail(email);
+      user.setId(username);
+      user.setPassword(password);
+      user.encodePassword();
+      ownerRepository.save(user);
     }
   }
 
