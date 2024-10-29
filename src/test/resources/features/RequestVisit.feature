@@ -5,6 +5,6 @@ Feature: Request Visit
   So that I can see the advertisement in person
 
   Scenario: Successful visit request
-    Given There is an advertisement with id 1
-    When I request a visit to the advertisement with id 1
+    Given There is an advertisement with and title "Cozy Loft" and address "Carrer de les Flors 10"
+    When I request a visit to the advertisement with title "Cozy Loft"
     Then The visit is successfully requested
