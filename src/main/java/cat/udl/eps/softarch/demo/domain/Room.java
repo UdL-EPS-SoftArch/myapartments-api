@@ -3,10 +3,7 @@ package cat.udl.eps.softarch.demo.domain;
 import cat.udl.eps.softarch.demo.domain.UriEntity;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
@@ -19,7 +16,9 @@ import lombok.*;
 
 public class Room extends UriEntity<Long> {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private int surface;
     private boolean isOccupied;
     private boolean hasWindow;
@@ -30,4 +29,6 @@ public class Room extends UriEntity<Long> {
     @ManyToOne()
     private Apartment apart;
 
+    public void setApartment(Apartment apartment) {
+    }
 }
