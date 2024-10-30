@@ -1,9 +1,9 @@
 package cat.udl.eps.softarch.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -11,6 +11,9 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Entity(name = "apartment")
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Apartment extends UriEntity<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +31,13 @@ public class Apartment extends UriEntity<Long> {
     private ZonedDateTime registrationDate;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JsonIdentityReference(alwaysAsId = true)
     private Owner owner;
 
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
     public List<Room> rooms;
+
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    private ApartmentDetails detail;
 }

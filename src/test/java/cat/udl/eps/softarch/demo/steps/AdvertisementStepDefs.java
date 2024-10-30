@@ -3,8 +3,7 @@ package cat.udl.eps.softarch.demo.steps;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import io.cucumber.java.en.And;
+
 import org.springframework.http.MediaType;
 import cat.udl.eps.softarch.demo.domain.*;
 import cat.udl.eps.softarch.demo.repository.AdvertisementRepository;
@@ -84,20 +83,37 @@ public class AdvertisementStepDefs {
 
     }
 
-    @When("^I delete the advertisement with id {long}")
-    public void iDeleteTheApartmentAdvertisement(String advertisementId) throws Exception {
+    @When("I create a new advertisement with title {string}, description {string}, price {string}, zipCode {string}, address {string}, country {string}, status {string}")
+    public void iCreateANewAdvertisement(String title, String description, String price, String zipCode, String adress, String country, String adStatusId) throws Exception {
+        Advertisement ad = new Advertisement();
+        ad.setTitle(title);
+        ad.setDescription(description);
+        ad.setPrice(new BigDecimal(price));
+        ad.setZipCode(zipCode);
+        ad.setAddress(adress);
+        ad.setCountry(country);
+        AdvertisementStatus cur_status = advertisementStatusRepository.findByStatus("Available").stream().findFirst().orElse(null);
+        ad.setAdStatus(cur_status);
+
+
         stepDefs.result = stepDefs.mockMvc.perform(
-                delete("/advertisements/{id}", advertisementId).accept(MediaType.APPLICATION_JSON)
-                        .with(AuthenticationStepDefs.authenticate())
-        ).andDo(print());
-    }
+                        post("/advertisements")
+                                .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
+                                .content(stepDefs.mapper.writeValueAsString(ad))
+                                .characterEncoding(StandardCharsets.UTF_8))
+                .andDo(print());
 
-    @And("^The adveritsment  with name {string}")
-    public void theApartmentWithNameNoLongerExists(String name) {
-        List<Advertisement> advertisements = advertisementRepository.findAdvertisementBy("name");
-        assertTrue("Advertisment with name associated \"" + name + "\" should no longer exist", advertisements.isEmpty());
     }
 
 
+    @Then("The advertisement has been created with title {string}")
+    public void theAdvertisementHasBeenCreatedWithTitle(String title) {
+        Advertisement createdAd = advertisementRepository.findByTitle(title).get(0);
+        assertEquals(title, createdAd.getTitle());
+    }
 
+    @Then("It has not been created an advertisement")
+    public void it_has_not_been_created_an_advertisement() {
+        assertEquals(0, advertisementRepository.count());
+    }
 }

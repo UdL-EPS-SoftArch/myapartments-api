@@ -8,7 +8,8 @@ Feature: Delete Advertisement
   Scenario: Delete an existing apartment advertisement with existing status as owner
     Given There is an existing apartment with id "1" named "Cozy Apartment"
     And There is an existing advertisement status "Available"
-    When I delete the apartment advertisement with id "1"
+    And There is an  existing advertisement with name "name"
+    When I delete the apartment advertisement with name ""
     Then The response code is 200
 
   Scenario: Delete a non-existing apartment as owner
