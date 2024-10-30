@@ -17,8 +17,9 @@ import org.hibernate.annotations.ColumnDefault;
 @NoArgsConstructor
 public class Room extends UriEntity<Long> {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private int surface;
 
     @ColumnDefault("false")
@@ -32,6 +33,7 @@ public class Room extends UriEntity<Long> {
     @JsonIdentityReference(alwaysAsId = true)
     @NotNull
     private Apartment apart;
+
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @NotNull
