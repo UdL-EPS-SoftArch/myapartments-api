@@ -64,6 +64,7 @@ public class UpdateApartmentStepDefs {
         assertFalse("Apartment with name \"" + name + "\" should exist", apartments.isEmpty());
     }
 
+    @Transactional
     @When("I update the apartment with name {string} to name {string}")
     public void iUpdateTheApartmentName(String name, String new_name) throws Exception {
         List<Apartment> apartments = apartmentRepository.findByName(name);
