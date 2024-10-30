@@ -63,7 +63,7 @@ public class UpdateApartmentStepDefs {
         apartments = apartmentRepository.findByName(name);
         assertFalse("Apartment with name \"" + name + "\" should exist", apartments.isEmpty());
     }
-    
+
     @When("I update the apartment with name {string} to name {string}")
     public void iUpdateTheApartmentName(String name, String new_name) throws Exception {
         List<Apartment> apartments = apartmentRepository.findByName(name);
@@ -80,5 +80,14 @@ public class UpdateApartmentStepDefs {
                                 .with(AuthenticationStepDefs.authenticate()))
                 .andDo(print())
                 .andExpect(status().isNoContent());
+    }
+
+    @And("The apartment with name {string} has updated the name to {string}")
+    public void theApartmentWithNameHasUpdatedTheNameTo(String name, String new_name) {
+        List<Apartment> oldApartments = apartmentRepository.findByName(name);
+        assertTrue("Apartment with name \"" + name + "\" should not exist", oldApartments.isEmpty());
+
+        List<Apartment> newApartments = apartmentRepository.findByName(new_name);
+        assertFalse("Apartment with name \"" + new_name + "\" should exist", newApartments.isEmpty());
     }
 }
