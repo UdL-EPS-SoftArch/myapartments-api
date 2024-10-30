@@ -46,20 +46,16 @@ public class CreateRoomStepDefs {
             Owner owner = owner_list_by_userid.get();
             Room room = RoomUtils.buildRoom(surface,IsOccupied,HasWindow,HasDesk,HasBed);
             room.setApart(apart);
-            room.setOwner(owner);
             roomRepository.save(room);
         }
     }
 
-    @When("I create a Room with the surface {string}, occupied {string}, window {string}, desk {string} and bed {string}, by owner username {string} and the apartment_name {string}")
-    public void iCreateARoomWithDetails(String surface, String occupied, String window, String desk, String bed, String UserName, String ApartmentName) throws Exception {
-        Optional<Owner> owner_list_by_userid = ownerRepository.findById(UserName);
+    @When("I create a Room with the surface {string}, occupied {string}, window {string}, desk {string} and bed {string} and the apartment_name {string}")
+    public void iCreateARoomWithDetails(String surface, String occupied, String window, String desk, String bed, String ApartmentName) throws Exception {
         Apartment apart = apartmentRepository.findByName(ApartmentName).get(0);
 
-        Owner owner = owner_list_by_userid.get();
         Room room = RoomUtils.buildRoom(surface,occupied,window,desk,bed);
         room.setApart(apart);
-        room.setOwner(owner);
         stepDefs.result = stepDefs.mockMvc.perform(
                         post("/rooms")
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -84,7 +80,6 @@ public class CreateRoomStepDefs {
         Apartment apartment = apartmentList.iterator().next();
         Owner owner = usersList.iterator().next();
         room.setApart(apartment);
-        room.setOwner(owner);
         stepDefs.result = stepDefs.mockMvc.perform(
                         post("/rooms")
                                 .contentType(MediaType.APPLICATION_JSON)
