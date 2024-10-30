@@ -34,8 +34,7 @@ public class Room extends UriEntity<Long> {
     @NotNull
     private Apartment apart;
 
-    public void setApartment(Apartment apartment) {
-    }
+
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @NotNull
     @ManyToOne

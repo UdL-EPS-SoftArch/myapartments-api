@@ -90,7 +90,7 @@ public class AdvertisementStepDefs {
 
         List<Room> rooms = List.of(room1, room2);
         for (Room room : rooms) {
-            room.setApartment(apartment);
+            room.setApart(apartment);
         }
 
         apartment.setRooms(rooms);
