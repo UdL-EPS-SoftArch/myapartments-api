@@ -42,7 +42,6 @@ public class AdvertisementStepDefs {
 
     @Given("There is an existing apartment with id {string} named {string}")
     public void thereIsAnExistingApartmentWithIdNamed(String id, String name) {
-        // Crea un objeto Owner (propietario)
         Optional<Owner> ownerOptional = ownerRepository.findById("owner");
         Owner owner;
         if (ownerOptional.isPresent()) {
@@ -58,21 +57,7 @@ public class AdvertisementStepDefs {
             ownerRepository.save(owner);
         }
 
-        Room room1 = new Room();
-        room1.setSurface(20);
-        room1.setOccupied(false);
-        room1.setHasWindow(true);
-        room1.setHasDesk(true);
-        room1.setHasBed(true);
 
-        Room room2 = new Room();
-        room2.setSurface(15);
-        room2.setOccupied(true);
-        room2.setHasWindow(false);
-        room2.setHasDesk(false);
-        room2.setHasBed(true);
-
-// Asignar el apartamento a cada habitación
         Apartment apartment = new Apartment();
         apartment.setName(name);
         apartment.setFloor(5);
@@ -84,16 +69,34 @@ public class AdvertisementStepDefs {
         apartment.setRegistrationDate(ZonedDateTime.now());
         apartment.setOwner(owner);
 
+
+        Room room1 = new Room();
+        room1.setSurface(20);
+        room1.setOccupied(false);
+        room1.setHasWindow(true);
+        room1.setHasDesk(true);
+        room1.setHasBed(true);
+        room1.setOwner(owner);
+        room1.setApart(apartment);
+
+        Room room2 = new Room();
+        room2.setSurface(15);
+        room2.setOccupied(true);
+        room2.setHasWindow(false);
+        room2.setHasDesk(false);
+        room2.setHasBed(true);
+        room2.setOwner(owner);
+        room2.setApart(apartment);
+
         List<Room> rooms = List.of(room1, room2);
         for (Room room : rooms) {
-            room.setApartment(apartment); // Establecer la relación bidireccional
+            room.setApartment(apartment);
         }
 
         apartment.setRooms(rooms);
-        apartmentRepository.save(apartment); // Guardar el apartamento con las habitaciones
-
-
+        apartmentRepository.save(apartment);
     }
+
 
     @Given("There is an existing advertisement status {string}")
     public void thereIsAnExistingAdvertisementStatusWithIdAndStatus(String status) {
