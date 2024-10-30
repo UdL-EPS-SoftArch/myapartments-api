@@ -63,4 +63,22 @@ public class UpdateApartmentStepDefs {
         apartments = apartmentRepository.findByName(name);
         assertFalse("Apartment with name \"" + name + "\" should exist", apartments.isEmpty());
     }
+    
+    @When("I update the apartment with name {string} to name {string}")
+    public void iUpdateTheApartmentName(String name, String new_name) throws Exception {
+        List<Apartment> apartments = apartmentRepository.findByName(name);
+        assertFalse("Apartment with name \"" + name + "\" should exist", apartments.isEmpty());
+
+        Apartment apartment = apartments.get(0);
+        apartment.setName(new_name);
+
+        stepDefs.result = stepDefs.mockMvc.perform(
+                        put("/apartments/" + apartment.getId())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(apartment))
+                                .characterEncoding(StandardCharsets.UTF_8)
+                                .with(AuthenticationStepDefs.authenticate()))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+    }
 }
