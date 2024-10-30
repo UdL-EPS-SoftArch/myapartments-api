@@ -45,6 +45,16 @@ public class DBInitialization {
             owner.encodePassword();
             ownerRepository.save(owner);
         }
+        if (!ownerRepository.existsById("owner1")) {
+            Owner owner = new Owner();
+            owner.setEmail("owner1@sample.app");
+            owner.setId("owner1");
+            owner.setName("Ibra");
+            owner.setPhoneNumber("600000000");
+            owner.setPassword(defaultPassword);
+            owner.encodePassword();
+            ownerRepository.save(owner);
+        }
         if (Arrays.asList(activeProfiles.split(",")).contains("test")) {
             // Testing instances
             if (!userRepository.existsById("test")) {
@@ -55,6 +65,7 @@ public class DBInitialization {
                 user.encodePassword();
                 userRepository.save(user);
             }
+
 
         }
     }
