@@ -9,6 +9,7 @@ import java.time.ZonedDateTime;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
+@Table(name = "visit")
 @Data
 public class Visit extends UriEntity<Long> {
 
@@ -22,4 +23,8 @@ public class Visit extends UriEntity<Long> {
     @ManyToOne
     @JoinColumn(name = "advertisement_id")
     private Advertisement advertisement;
+
+    public void setVisitDateTime(ZonedDateTime parse) {
+        this.when = parse;
+    }
 }

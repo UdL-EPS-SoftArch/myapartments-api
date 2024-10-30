@@ -5,6 +5,7 @@ Feature: Request Visit
   So that I can see the advertisement in person
 
   Scenario: Successful visit request
-    Given There is an advertisement with and title "Cozy Loft" and address "Carrer de les Flors 10"
+    Given There is an advertisement with title "Cozy Loft" and address "Carrer de les Flors 10"
+    And I login as "demo" with password "password"
     When I request a visit to the advertisement with title "Cozy Loft"
     Then The visit is successfully requested

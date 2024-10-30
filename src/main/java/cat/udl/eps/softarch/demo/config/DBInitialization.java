@@ -53,15 +53,7 @@ public class DBInitialization {
             owner.encodePassword();
             ownerRepository.save(owner);
         }
-        // Advertisement
-        if (!advertisementRepository.existsById(1L)) {
-            Advertisement advertisement = new Advertisement();
-            advertisement.setId(1L);
-            advertisement.setTitle("Demo");
-            advertisement.setDescription("Demo");
-            advertisement.setPrice(BigDecimal.ONE);
-            advertisementRepository.save(advertisement);
-        }
+
         if (!ownerRepository.existsById("owner1")) {
             Owner owner = new Owner();
             owner.setEmail("owner1@sample.app");

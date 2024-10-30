@@ -6,12 +6,14 @@ import cat.udl.eps.softarch.demo.domain.Visit;
 import cat.udl.eps.softarch.demo.repository.AdvertisementRepository;
 import cat.udl.eps.softarch.demo.repository.AdvertisementStatusRepository;
 import cat.udl.eps.softarch.demo.repository.VisitRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.math.BigDecimal;
@@ -19,12 +21,13 @@ import java.time.ZonedDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class RequestVisitStepDefs {
 
     @Autowired
-    private MockMvc mockMvc;
+    private StepDefs stepDefs;
 
     @Autowired
     private VisitRepository visitRepository;
@@ -37,6 +40,13 @@ public class RequestVisitStepDefs {
     private MvcResult result;
     private Advertisement advertisement;
 
+
+    public void createAdvertisementStatus(String status) {
+        AdvertisementStatus advertisementStatus = new AdvertisementStatus();
+        advertisementStatus.setStatus(status);
+        advertisementStatusRepository.save(advertisementStatus);
+
+    }
     @Given("There is an advertisement with title {string} and address {string}")
     public void thereIsAnAdvertisementWithTitleAndAddress(String title, String address) {
         advertisement = new Advertisement();
@@ -47,6 +57,7 @@ public class RequestVisitStepDefs {
         advertisement.setZipCode("08001");
         advertisement.setCountry("Spain");
         advertisement.setCreationDate(ZonedDateTime.now());
+        createAdvertisementStatus("Available");
         AdvertisementStatus cur_status = advertisementStatusRepository.findByStatus("Available").stream().findFirst().orElse(null);
         advertisement.setAdStatus(cur_status);
 
@@ -59,12 +70,31 @@ public class RequestVisitStepDefs {
         Advertisement advertisement = advertisementRepository.findByTitle(title).get(0);
         assertNotNull(advertisement, "Advertisement should exist");
 
-        // Request visit using MockMvc to simulate a POST request
-        result = mockMvc.perform(post("/visits")
-                        .contentType("application/json")
-                        .content("{\"advertisement\":{\"id\":" + advertisement.getId() + "}}"))
+        // Set the visit date and time
+        String visitDateTime = "2024-10-30T10:00:00+01:00[Europe/Madrid]";
+        Visit visit = new Visit();
+        visit.setVisitDateTime(ZonedDateTime.parse(visitDateTime));
+        visit.setAdvertisement(advertisement);
+
+        visit = visitRepository.save(visit);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+
+
+        String jsonContent = objectMapper.writeValueAsString(visit);
+
+
+        result = stepDefs.mockMvc.perform(post("/visits")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonContent)
+                        .with(AuthenticationStepDefs.authenticate()))
+                .andDo(print())
                 .andExpect(status().isCreated())
                 .andReturn();
+
+
+
     }
 
     @Then("The visit is successfully requested")
