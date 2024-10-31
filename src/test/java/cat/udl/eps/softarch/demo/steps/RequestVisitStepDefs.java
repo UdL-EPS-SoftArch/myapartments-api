@@ -2,9 +2,11 @@ package cat.udl.eps.softarch.demo.steps;
 
 import cat.udl.eps.softarch.demo.domain.Advertisement;
 import cat.udl.eps.softarch.demo.domain.AdvertisementStatus;
+import cat.udl.eps.softarch.demo.domain.Apartment;
 import cat.udl.eps.softarch.demo.domain.Visit;
 import cat.udl.eps.softarch.demo.repository.AdvertisementRepository;
 import cat.udl.eps.softarch.demo.repository.AdvertisementStatusRepository;
+import cat.udl.eps.softarch.demo.repository.ApartmentRepository;
 import cat.udl.eps.softarch.demo.repository.VisitRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,16 +14,19 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -33,6 +38,9 @@ public class RequestVisitStepDefs {
 
     @Autowired
     private VisitRepository visitRepository;
+
+    @Autowired
+    private ApartmentRepository apartmentRepository;
 
     @Autowired
     private AdvertisementRepository advertisementRepository;
@@ -59,6 +67,10 @@ public class RequestVisitStepDefs {
         advertisement.setZipCode("08001");
         advertisement.setCountry("Spain");
         advertisement.setCreationDate(ZonedDateTime.now());
+        String visitDateTime = ZonedDateTime.now().plusDays(30).toString();
+        Apartment apartment = ApartmentUtils.buildApartment("Apartment", "2", "Apartment", "25182", "Lleida", "Spain", "Apartment", visitDateTime);
+        apartmentRepository.save(apartment);
+        advertisement.setApartment(apartment);
         createAdvertisementStatus("Available");
         AdvertisementStatus cur_status = advertisementStatusRepository.findByStatus("Available").stream().findFirst().orElse(null);
         advertisement.setAdStatus(cur_status);
@@ -123,5 +135,6 @@ public class RequestVisitStepDefs {
         assertNotNull(result, "Result should not be null after visit request");
         Assertions.assertEquals(400, result.getResponse().getStatus(), "Expected HTTP status 400 Bad Request");
     }
+
 
 }

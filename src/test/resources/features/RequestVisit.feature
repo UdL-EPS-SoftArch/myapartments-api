@@ -15,3 +15,4 @@ Feature: Request Visit
     And  I login as "demo" with password "password"
     When I request a visit to the advertisement with title "Invalid Advertisement"
     Then The visit is not successfully requested
+
