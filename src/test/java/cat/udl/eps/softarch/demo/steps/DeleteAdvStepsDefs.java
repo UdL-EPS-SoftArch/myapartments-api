@@ -31,18 +31,6 @@ public class DeleteAdvStepsDefs {
     @Autowired
     private StepDefs stepDefs;
 
-
-
-
-
-    @When("I delete the apartment advertisement with title {string}")
-    public void iDeleteTheApartmentAdvertisement(String advertisementId) throws Exception {
-        stepDefs.result = stepDefs.mockMvc.perform(
-                delete("/advertisements/{id}", advertisementId).accept(MediaType.APPLICATION_JSON)
-                        .with(AuthenticationStepDefs.authenticate())
-        ).andDo(print());
-    }
-
     @And("There is an advertisement with title {string}, description {string}, price {string}, zipCode {string}, address {string}, country {string}, status {string}")
     public void iCreateANewAdvertisement(String title, String description, String price, String zipCode, String adress, String country, String status)  {
         Advertisement ad = new Advertisement();
@@ -55,10 +43,22 @@ public class DeleteAdvStepsDefs {
         AdvertisementStatus cur_status = advertisementStatusRepository.findByStatus(status).stream().findFirst().orElse(null);
         ad.setAdStatus(cur_status);
         advertisementRepository.save(ad);
-
-
     }
 
-
+    @When("I delete the apartment advertisement with title {string}")
+    public void iDeleteTheApartmentAdvertisement(String title) throws Exception {
+        Advertisement ad = advertisementRepository.findByTitle(title).stream().findFirst().orElse(null);
+        if (ad == null) {
+            stepDefs.result = stepDefs.mockMvc.perform(
+                    delete("/advertisements/{id}", 9999).accept(MediaType.APPLICATION_JSON)
+                            .with(AuthenticationStepDefs.authenticate())
+            ).andDo(print());
+        } else {
+            stepDefs.result = stepDefs.mockMvc.perform(
+                    delete("/advertisements/{id}", ad.getId()).accept(MediaType.APPLICATION_JSON)
+                            .with(AuthenticationStepDefs.authenticate())
+            ).andDo(print());
+        }
+    }
 
 }
