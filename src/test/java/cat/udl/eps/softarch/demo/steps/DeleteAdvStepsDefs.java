@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+
+import cat.udl.eps.softarch.demo.repository.ApartmentRepository;
 import io.cucumber.java.en.And;
 import org.springframework.http.MediaType;
 import cat.udl.eps.softarch.demo.domain.*;
@@ -24,6 +26,9 @@ public class DeleteAdvStepsDefs {
 
     @Autowired
     private AdvertisementRepository advertisementRepository;
+
+    @Autowired
+    private ApartmentRepository apartmentRepository;
     @Autowired
     private AdvertisementStatusRepository advertisementStatusRepository;
     private AdvertisementStatus status;
@@ -31,8 +36,8 @@ public class DeleteAdvStepsDefs {
     @Autowired
     private StepDefs stepDefs;
 
-    @And("There is an advertisement with title {string}, description {string}, price {string}, zipCode {string}, address {string}, country {string}, status {string}")
-    public void iCreateANewAdvertisement(String title, String description, String price, String zipCode, String adress, String country, String status)  {
+    @And("There is an advertisement with title {string}, description {string}, price {string}, zipCode {string}, address {string}, country {string}, status {string}, apartment title {string}")
+    public void iCreateANewAdvertisement(String title, String description, String price, String zipCode, String adress, String country, String status, String apartmentTitle)  {
         Advertisement ad = new Advertisement();
         ad.setTitle(title);
         ad.setDescription(description);
@@ -40,6 +45,8 @@ public class DeleteAdvStepsDefs {
         ad.setZipCode(zipCode);
         ad.setAddress(adress);
         ad.setCountry(country);
+        Apartment apartment = apartmentRepository.findByName(apartmentTitle).stream().findFirst().orElse(null);
+        ad.setApartment(apartment);
         AdvertisementStatus cur_status = advertisementStatusRepository.findByStatus(status).stream().findFirst().orElse(null);
         ad.setAdStatus(cur_status);
         advertisementRepository.save(ad);
