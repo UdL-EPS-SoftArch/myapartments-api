@@ -10,7 +10,7 @@ Feature: Delete Advertisement
     And I login as "owner" with password "password"
     And There is an existing advertisement status "Available"
     And There is an advertisement with title "Apartment for rent", description "A beautiful apartment", price "1200", zipCode "12345", address "456 Elm St", country "Spain", status "Available"
-    When I delete the apartment advertisement with title "test"
+    When I delete the apartment advertisement with title "Apartment for rent"
     Then The response code is 200
 
   Scenario: Delete a non-existing apartment as owner
@@ -26,8 +26,8 @@ Feature: Delete Advertisement
     And There is an existing advertisement status "Available"
     And There is an advertisement with title "Apartment for rent", description "A beautiful apartment", price "1200", zipCode "12345", address "456 Elm St", country "Spain", status "Available"
     Given I'm not logged in
+    When I delete the apartment advertisement with title "Apartment for rent"
     Then The response code is 401
-
 
 
 
