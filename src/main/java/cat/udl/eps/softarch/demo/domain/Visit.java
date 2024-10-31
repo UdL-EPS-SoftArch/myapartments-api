@@ -2,6 +2,7 @@ package cat.udl.eps.softarch.demo.domain;
 
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -26,6 +27,7 @@ public class Visit extends UriEntity<Long> {
 
 
     @ManyToOne
+    @NotNull
     @JsonIdentityReference(alwaysAsId = true)
     private Advertisement advertisement;
 

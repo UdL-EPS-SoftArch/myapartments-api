@@ -6,6 +6,7 @@ import cat.udl.eps.softarch.demo.domain.Visit;
 import cat.udl.eps.softarch.demo.repository.AdvertisementRepository;
 import cat.udl.eps.softarch.demo.repository.AdvertisementStatusRepository;
 import cat.udl.eps.softarch.demo.repository.VisitRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.cucumber.java.en.Given;
@@ -18,6 +19,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -67,9 +69,13 @@ public class RequestVisitStepDefs {
     @When("I request a visit to the advertisement with title {string}")
     public void iRequestAVisitToTheAdvertisementWithTitle(String title) throws Exception {
 
-        Advertisement advertisement = advertisementRepository.findByTitle(title).get(0);
-        assertNotNull(advertisement, "Advertisement should exist");
+        Advertisement advertisement;
 
+        if(title.equals("Invalid Advertisement"))
+             advertisement = null;
+        else  {
+             advertisement = advertisementRepository.findByTitle(title).get(0);
+        }
 
         String visitDateTime = ZonedDateTime.now().plusDays(30).toString();
         Visit visit = new Visit();
@@ -83,15 +89,24 @@ public class RequestVisitStepDefs {
 
         String jsonContent = objectMapper.writeValueAsString(visit);
 
+        if(advertisement != null) {
+            result = stepDefs.mockMvc.perform(post("/visits")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(jsonContent)
+                            .with(AuthenticationStepDefs.authenticate()))
+                    .andDo(print())
+                    .andExpect(status().isCreated())
+                    .andReturn();
+        } else if (advertisement == null) {
 
-        result = stepDefs.mockMvc.perform(post("/visits")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonContent)
-                        .with(AuthenticationStepDefs.authenticate()))
-                .andDo(print())
-                .andExpect(status().isCreated())
-                .andReturn();
-
+            result = stepDefs.mockMvc.perform(post("/visits")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(jsonContent)
+                            .with(AuthenticationStepDefs.authenticate()))
+                    .andDo(print())
+                    .andExpect(status().isBadRequest())
+                    .andReturn();
+        }
 
 
     }
@@ -101,4 +116,12 @@ public class RequestVisitStepDefs {
         assertNotNull(result, "Result should not be null after visit request");
         Assertions.assertEquals(201, result.getResponse().getStatus(), "Expected HTTP status 201 Created");
     }
+
+
+    @Then("The visit is not successfully requested")
+    public void theVisitIsNotSuccessfullyRequested() {
+        assertNotNull(result, "Result should not be null after visit request");
+        Assertions.assertEquals(400, result.getResponse().getStatus(), "Expected HTTP status 400 Bad Request");
+    }
+
 }
