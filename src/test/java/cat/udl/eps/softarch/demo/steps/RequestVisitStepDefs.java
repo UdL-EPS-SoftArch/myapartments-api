@@ -66,17 +66,16 @@ public class RequestVisitStepDefs {
 
     @When("I request a visit to the advertisement with title {string}")
     public void iRequestAVisitToTheAdvertisementWithTitle(String title) throws Exception {
-        // Ensure that the advertisement exists
+
         Advertisement advertisement = advertisementRepository.findByTitle(title).get(0);
         assertNotNull(advertisement, "Advertisement should exist");
 
-        // Set the visit date and time
-        String visitDateTime = "2024-10-30T10:00:00+01:00[Europe/Madrid]";
+
+        String visitDateTime = ZonedDateTime.now().plusDays(30).toString();
         Visit visit = new Visit();
         visit.setVisitDateTime(ZonedDateTime.parse(visitDateTime));
         visit.setAdvertisement(advertisement);
 
-        visit = visitRepository.save(visit);
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
