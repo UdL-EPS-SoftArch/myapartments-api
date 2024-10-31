@@ -28,30 +28,27 @@ public class UpdateRoomStepsDefs {
     @Autowired
     private OwnerRepository ownerRepository;
 
-    @When("I update an apartment called {string}")
+    @When("I update a room called {string}")
     public void iUpdateAnApartmentCalled(String apartmentName) throws Exception {
         Apartment apartment = apartmentRepository.findByName(apartmentName).get(0);
         Room room = RoomUtils.getRoom(roomRepository, apartment);
-        if (room != null) {
-            JSONObject json = new JSONObject();
-            json.put("surface", 20);
-            json.put("isOccupied", true);
-            json.put("hasWindow", true);
-            json.put("hasDesk", true);
-            json.put("hasBed", true);
 
-            stepDefs.result = stepDefs.mockMvc.perform(patch(room.getUri())
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(json.toString())
-                            .characterEncoding(StandardCharsets.UTF_8)
-                            .accept(MediaType.APPLICATION_JSON)
-                            .with(AuthenticationStepDefs.authenticate()))
-                    .andDo(print());
+        JSONObject json = new JSONObject();
+        json.put("surface", 20);
+        json.put("isOccupied", true);
+        json.put("hasWindow", true);
+        json.put("hasDesk", true);
+        json.put("hasBed", true);
 
-            stepDefs.result.andReturn().getResponse().getHeader("Location");
-        } else {
-            throw new RuntimeException("Room not found.");
-        }
+        stepDefs.result = stepDefs.mockMvc.perform(patch(room.getUri())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json.toString())
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .with(AuthenticationStepDefs.authenticate()))
+                .andDo(print());
+
+        stepDefs.result.andReturn().getResponse().getHeader("Location");
     }
 }
 
