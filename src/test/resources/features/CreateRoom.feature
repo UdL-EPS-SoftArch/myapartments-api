@@ -10,10 +10,10 @@ Feature: Create Room
 
   Scenario: Create a new Room while logged in
     Given I login as "owner1" with password "password"
-    When I create a Room with the surface "30", occupied "false", window "false", desk "false" and bed "false", by owner username "owner1" and the apartment_name "test"
+    When I create a Room with the surface "30", occupied "false", window "false", desk "false" and bed "false" and the apartment_name "test"
     Then The response code is 201
 
   Scenario: Create a Room without being logged in
     Given I'm not logged in
-    When I create a Room with the surface "30", occupied "false", window "false", desk "false" and bed "false", by owner username "owner1" and the apartment_name "test"
+    When I create a Room with the surface "30", occupied "false", window "false", desk "false" and bed "false" and the apartment_name "test"
     Then The response code is 401
