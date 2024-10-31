@@ -1,16 +1,19 @@
 package cat.udl.eps.softarch.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import java.time.ZonedDateTime;
 
+
 @EqualsAndHashCode(callSuper = true)
-@Entity
-@Table(name = "visit")
+@Entity(name = "visit")
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Visit extends UriEntity<Long> {
 
     @Id
@@ -18,10 +21,12 @@ public class Visit extends UriEntity<Long> {
     private Long id;
 
     @NotNull
+    @Column(name = "visit_date")
     private ZonedDateTime when;
 
+
     @ManyToOne
-    @JoinColumn(name = "advertisement_id")
+    @JsonIdentityReference(alwaysAsId = true)
     private Advertisement advertisement;
 
     public void setVisitDateTime(ZonedDateTime parse) {
