@@ -52,6 +52,11 @@ public class Advertisement extends UriEntity<Long> {
     @JsonIdentityReference(alwaysAsId = true)
     public AdvertisementStatus adStatus;
 
+    @NotNull
+    @ManyToOne
+    @JsonIdentityReference(alwaysAsId = true)
+    public Apartment apartment;
+
 
     public Advertisement() {
         this.creationDate = ZonedDateTime.now();
