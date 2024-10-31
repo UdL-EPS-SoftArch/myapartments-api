@@ -13,6 +13,7 @@ import cat.udl.eps.softarch.demo.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import org.springframework.http.MediaType;
 import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class UpdateApartmentStepDefs {
@@ -37,7 +39,7 @@ public class UpdateApartmentStepDefs {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Given("Exists an apartment registered with the name {string}")
+    @Given("Exists an apartment registered as {string}")
     public void existsAnApartmentRegisteredWithTheName(String name) throws Exception {
         List<Apartment> apartments = apartmentRepository.findByName(name);
         if (apartments.isEmpty()) {
@@ -47,9 +49,7 @@ public class UpdateApartmentStepDefs {
 
             Optional<Owner> ownerOptional = ownerRepository.findById(AuthenticationStepDefs.currentUsername);
 
-            if (ownerOptional.isPresent()) {
-                apartment.setOwner(ownerOptional.get());
-            }
+            ownerOptional.ifPresent(apartment::setOwner);
 
             stepDefs.result = stepDefs.mockMvc.perform(
                             post("/apartments")
@@ -65,8 +65,8 @@ public class UpdateApartmentStepDefs {
     }
 
     @Transactional
-    @When("I update the apartment with name {string} to name {string}")
-    public void iUpdateTheApartmentName(String name, String new_name) throws Exception {
+    @When("I update it from name {string} to {string}")
+    public void iUpdateTheApartmentsName(String name, String new_name) throws Exception {
         List<Apartment> apartments = apartmentRepository.findByName(name);
         assertFalse("Apartment with name \"" + name + "\" should exist", apartments.isEmpty());
 
@@ -83,8 +83,8 @@ public class UpdateApartmentStepDefs {
                 .andExpect(status().isNoContent());
     }
 
-    @And("The apartment with name {string} has updated the name to {string}")
-    public void theApartmentWithNameHasUpdatedTheNameTo(String name, String new_name) {
+    @Then("The apartment {string} name is {string}")
+    public void theApartmentHasUpdatedNameTo(String name, String new_name) {
         List<Apartment> oldApartments = apartmentRepository.findByName(name);
         assertTrue("Apartment with name \"" + name + "\" should not exist", oldApartments.isEmpty());
 
