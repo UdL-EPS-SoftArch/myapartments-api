@@ -52,6 +52,7 @@ Feature: Create advertisement
 
   Scenario: Create advertisement with missing ad status
     Given There is an existing apartment with id "1" named "Cozy Apartment"
+    And I login as "owner" with password "password>"
     When I create a new advertisement with title "Apartment for rent", description "A beautiful apartment", price "1200", zipCode "12345", address "456 Elm St", country "Spain", status "", apartment title "Cozy Apartment"
     Then The response code is 400
     And The error message is "must not be null"
