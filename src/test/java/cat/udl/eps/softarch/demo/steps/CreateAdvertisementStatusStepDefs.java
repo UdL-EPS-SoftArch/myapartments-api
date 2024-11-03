@@ -60,4 +60,6 @@ public class CreateAdvertisementStatusStepDefs {
     public void noAdvertisementStatusHasBeenCreated() {
         assertEquals(0, advertisementStatusRepository.count());
     }
+
+
 }
