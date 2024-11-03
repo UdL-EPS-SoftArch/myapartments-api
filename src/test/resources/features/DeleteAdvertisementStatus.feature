@@ -17,3 +17,18 @@ Feature: AdvertisementStatus Creation
     Then The response code is 404
 
 
+  Scenario: Try to delete an existing AdvertisementStatus with non valid user
+
+    Given I login as "user" with password "password"
+    And There is an existing advertisement status "Available"
+    When I delete the advertisement status with status "Available"
+    Then The response code is 401
+
+
+  Scenario: Try to delete an existing AdvertisementStatus without login
+
+    Given There is an existing advertisement status "Available"
+    When I delete the advertisement status with status "Available"
+    Then The response code is 401
+
+
