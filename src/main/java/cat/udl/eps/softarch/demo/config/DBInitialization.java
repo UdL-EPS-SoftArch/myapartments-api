@@ -1,12 +1,18 @@
 package cat.udl.eps.softarch.demo.config;
 import cat.udl.eps.softarch.demo.domain.Owner;
+import cat.udl.eps.softarch.demo.domain.Advertisement;
 import cat.udl.eps.softarch.demo.domain.User;
 import cat.udl.eps.softarch.demo.repository.OwnerRepository;
+import cat.udl.eps.softarch.demo.repository.AdvertisementRepository;
 import cat.udl.eps.softarch.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import jakarta.annotation.PostConstruct;
+
+import java.math.BigDecimal;
 import java.util.Arrays;
+import cat.udl.eps.softarch.demo.domain.Advertisement;
+import cat.udl.eps.softarch.demo.repository.AdvertisementRepository;
 import java.util.Set;
 
 @Configuration
@@ -17,10 +23,12 @@ public class DBInitialization {
     @Value("${spring.profiles.active:}")
     private String activeProfiles;
     private final UserRepository userRepository;
+    private final AdvertisementRepository advertisementRepository;
 
-    public DBInitialization(UserRepository userRepository, OwnerRepository ownerRepository) {
+    public DBInitialization(UserRepository userRepository, OwnerRepository ownerRepository, AdvertisementRepository advertisementRepository) {
         this.userRepository = userRepository;
         this.ownerRepository = ownerRepository;
+        this.advertisementRepository = advertisementRepository;
     }
 
     @PostConstruct
@@ -45,6 +53,7 @@ public class DBInitialization {
             owner.encodePassword();
             ownerRepository.save(owner);
         }
+
         if (!ownerRepository.existsById("owner1")) {
             Owner owner = new Owner();
             owner.setEmail("owner1@sample.app");
