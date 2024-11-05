@@ -44,12 +44,6 @@ public class DeleteAdvertisementStatusStepDefs {
     private ObjectMapper objectMapper;
 
 
-    @And("^The advertisement status with name \"([^\"]*)\" no longer exists$")
-    public void theApartmentWithNameNoLongerExists(String name) {
-        List<AdvertisementStatus> apartments = advertisementStatusRepository.findByStatus(name);
-        assertTrue("Apartment with name \"" + name + "\" should no longer exist", apartments.isEmpty());
-    }
-
     @When("I delete the advertisement status with status {string}")
     public void iDeleteTheAdvertisementStatusWithStatus(String status) throws Exception {
         AdvertisementStatus adStatus = advertisementStatusRepository.findByStatus(status).stream().findFirst().orElse(null);
@@ -57,7 +51,7 @@ public class DeleteAdvertisementStatusStepDefs {
 
         if (adStatus == null) {
             stepDefs.result = stepDefs.mockMvc.perform(
-                    delete("/advertisements/{id}", 9999).accept(MediaType.APPLICATION_JSON)
+                    delete("/advertisementStatuses/{id}", 9999).accept(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8)
                             .with(AuthenticationStepDefs.authenticate()))
                     .andDo(print());
