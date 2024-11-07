@@ -24,7 +24,7 @@ Feature: Create Room
     Given I login as "demo" with password "password"
     When I create a Room with the surface "30", occupied "false", window "false", desk "false" and bed "false" and the apartment_name "testApartment"
     Then The response code is 403
-    And The error message is "Forbidden"
+    And The error message is "Not owner type."
 
 
   Scenario: Create Room as a other owner
