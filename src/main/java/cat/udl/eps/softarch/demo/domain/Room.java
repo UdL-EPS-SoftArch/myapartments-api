@@ -17,8 +17,9 @@ import org.hibernate.annotations.ColumnDefault;
 @NoArgsConstructor
 public class Room extends UriEntity<Long> {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private int surface;
 
     @ColumnDefault("false")
