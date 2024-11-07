@@ -26,11 +26,10 @@ public class RoomEventHandler {
 
     final Logger logger = LoggerFactory.getLogger(Room.class);
     final ApartmentRepository apartmentRepository;
-    private final RoomRepository roomRepository;
 
-    public RoomEventHandler(ApartmentRepository apartmentRepository, RoomRepository roomRepository) {
+    public RoomEventHandler(ApartmentRepository apartmentRepository) {
         this.apartmentRepository = apartmentRepository;
-        this.roomRepository = roomRepository;
+
     }
 
     @HandleBeforeSave
@@ -41,5 +40,14 @@ public class RoomEventHandler {
         if(!roomOwner.equals(owner)){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Unauthorized owner.");        }
         logger.info("New room updated: {}", room);
+    }
+    @HandleBeforeCreate
+    public void handleBeforeCreate(Room room) throws AccessDeniedException {
+        Owner owner = (Owner) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Apartment apart = room.getApart();
+        Owner roomOwner = apart.getOwner();
+        if(!roomOwner.equals(owner)){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Unauthorized owner.");        }
+        logger.info("New room created: {}", room);
     }
 }
