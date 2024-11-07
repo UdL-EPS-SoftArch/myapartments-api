@@ -12,40 +12,40 @@ Feature: Update Room
 
   Scenario: Update Room without being logged in
     Given I'm not logged in
-    When I update a room called "testApartment"
+    When I update the room "1"
     Then The response code is 401
     And The error message is "Unauthorized"
 
   Scenario: Update Room being logged in as owner
     Given I login as "owner1" with password "password"
-    When I update a room called "testApartment"
+    When I update the room "1"
     Then The response code is 200
 
   Scenario: Update Room being logged in without surface
     Given I login as "owner1" with password "password"
-    When I update a room called "testApartment"
+    When I update the room "1"
     Then The response code is 200
 
   Scenario: Update Room being logged in as owner without occupancy status
     Given I login as "owner1" with password "password"
-    When I update a room called "testApartment"
+    When I update the room "1"
     Then The response code is 200
 
   Scenario: Update Room with non-existing ID
     Given I login as "wrong-user" with password "wrong-password"
-    When I update a room called "testApartment"
+    When I update the room "1"
     Then The response code is 401
     And The error message is "Unauthorized"
 
   Scenario: Update Room as a non-owner
     Given I login as "demo" with password "password"
-    When I update a room called "testApartment"
+    When I update the room "1"
     Then The response code is 403
     And The error message is "Forbidden"
 
 
   Scenario: Update Room as a other owner
     Given I login as "owner" with password "password"
-    When I update a room called "testApartment"
+    When I update the room "1"
     Then The response code is 403
     And The error message is "Unauthorized owner."
