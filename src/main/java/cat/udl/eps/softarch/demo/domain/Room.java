@@ -34,5 +34,10 @@ public class Room extends UriEntity<Long> {
     @NotNull
     private Apartment apart;
 
+    private String ownerId;
+    public void setOwner(Owner owner) {
+        ownerId = owner.getId();
+    }
+
 
 }
