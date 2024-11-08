@@ -5,6 +5,7 @@ import cat.udl.eps.softarch.demo.repository.AdvertisementRepository;
 import cat.udl.eps.softarch.demo.repository.ReviewRepository;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.eclipse.angus.mail.imap.protocol.IMAPProtocol;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
@@ -15,6 +16,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class UpdateReviewStepDefs {
 
@@ -26,6 +28,28 @@ public class UpdateReviewStepDefs {
 
     @Autowired
     private StepDefs stepDefs;
+
+    @When("I update the review with title {string} to have new title {string} and new description {string}")
+    public void iUpdateTheReviewWithTitleToHaveNewTitleAndNewDescription(String oldTitle, String newTitle, String newDescription) throws Exception {
+        Review review = reviewRepository.findByTitle(oldTitle).stream().findFirst().orElse(null);
+
+        if (review != null) {
+            review.setTitle(newTitle);
+            review.setDescription(newDescription);
+
+            reviewRepository.save(review);
+
+            stepDefs.result = stepDefs.mockMvc.perform(
+                    put("/reviews/{id}", review.getId())
+                            .with(AuthenticationStepDefs.authenticate())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content("{\"title\": \"" + newTitle + "\", \"description\": \"" + newDescription + "\", \"rating\": \"" + review.getRating() + "\"}")
+                            .accept(MediaType.APPLICATION_JSON)
+            ).andDo(print()).andExpect(status().isOk());
+
+        }
+    }
+
 
     @When("I update the review with title {string} to have description {string}")
     public void iUpdateReviewDescription(String title, String newDescription) throws Exception {
