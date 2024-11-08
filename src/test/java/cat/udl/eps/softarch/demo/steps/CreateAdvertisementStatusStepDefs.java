@@ -1,10 +1,8 @@
 package cat.udl.eps.softarch.demo.steps;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import cat.udl.eps.softarch.demo.domain.AdvertisementStatus;
 import cat.udl.eps.softarch.demo.repository.AdvertisementStatusRepository;

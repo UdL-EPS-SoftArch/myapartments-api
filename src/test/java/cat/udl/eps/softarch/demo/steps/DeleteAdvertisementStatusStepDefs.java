@@ -1,30 +1,15 @@
 package cat.udl.eps.softarch.demo.steps;
 
 import cat.udl.eps.softarch.demo.domain.AdvertisementStatus;
-import cat.udl.eps.softarch.demo.domain.Apartment;
-import cat.udl.eps.softarch.demo.domain.Owner;
 import cat.udl.eps.softarch.demo.repository.AdvertisementStatusRepository;
-import cat.udl.eps.softarch.demo.repository.ApartmentRepository;
-import cat.udl.eps.softarch.demo.repository.OwnerRepository;
-import cat.udl.eps.softarch.demo.repository.UserRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
 import java.nio.charset.StandardCharsets;
-import java.time.ZonedDateTime;
-import java.util.List;
-import java.util.Optional;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class DeleteAdvertisementStatusStepDefs {
 
@@ -33,15 +18,6 @@ public class DeleteAdvertisementStatusStepDefs {
 
     @Autowired
     AdvertisementStatusRepository advertisementStatusRepository;
-
-    @Autowired
-    private OwnerRepository ownerRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
 
     @When("I delete the advertisement status with status {string}")
