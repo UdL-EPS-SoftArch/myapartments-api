@@ -27,7 +27,7 @@ public class DeleteAdvertisementStatusStepDefs {
 
         if (adStatus == null) {
             stepDefs.result = stepDefs.mockMvc.perform(
-                    delete("/advertisementStatuses/{id}", 9999).accept(MediaType.APPLICATION_JSON)
+                    delete("/advertisementStatuses/{id}", -1).accept(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8)
                             .with(AuthenticationStepDefs.authenticate()))
                     .andDo(print());

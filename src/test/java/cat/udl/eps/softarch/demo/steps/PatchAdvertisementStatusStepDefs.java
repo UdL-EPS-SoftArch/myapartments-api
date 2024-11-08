@@ -47,6 +47,7 @@ public class PatchAdvertisementStatusStepDefs {
             adStatus.setStatus(newStatus);
         }
 
+
         this.stepDefs.result = this.stepDefs.mockMvc.perform(patch("/advertisementStatuses/" + this.adStatusId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(stepDefs.mapper.writeValueAsString(adStatus))
