@@ -57,5 +57,21 @@ public class RoomEventHandler {
         logger.info("New room updated: {}", room);
     }
 
+    @HandleBeforeDelete
+    public void handleBeforeDelate(Room room) {
+        Owner owner;
+        try{
+            owner = (Owner) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        }catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not owner type.");
+        }
+        Apartment apart = room.getApart();
+        Owner roomOwner = apart.getOwner();
+        assert roomOwner.getId() != null;
+        if(!roomOwner.getId().equals(owner.getId())){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Unauthorized owner.");        }
+        logger.info("New room updated: {}", room);
+    }
+
 
 }
