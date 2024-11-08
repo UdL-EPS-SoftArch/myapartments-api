@@ -1,10 +1,13 @@
 package cat.udl.eps.softarch.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.math.BigDecimal;
 
 @Setter
 @Getter
@@ -25,12 +28,12 @@ public class Review extends UriEntity<Long>{
     private String description;
 
     @NotNull
-    @Min(value = 0)
-    @Max(value = 5)
-    private Double rating;
+    @DecimalMin(value = "0")
+    @DecimalMax(value = "5")
+    private BigDecimal rating;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @NotNull
     @ManyToOne
+    @JsonIdentityReference(alwaysAsId = true)
     public Advertisement advertisement;
 }
