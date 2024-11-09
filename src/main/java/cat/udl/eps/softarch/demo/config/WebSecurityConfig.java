@@ -40,6 +40,7 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/properties/*").hasAuthority("ROLE_OWNER")
                         .requestMatchers(HttpMethod.DELETE, "/properties/*").hasAuthority("ROLE_OWNER")
                         .requestMatchers(HttpMethod.POST, "/students").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/students/*").hasAuthority("ROLE_STUDENT")
                         .requestMatchers(HttpMethod.POST, "/visits").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/visits/*").authenticated()
                         .requestMatchers(HttpMethod.POST, "/*/*").authenticated()
