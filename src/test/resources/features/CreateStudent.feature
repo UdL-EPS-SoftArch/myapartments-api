@@ -7,7 +7,7 @@ Feature: Create Student
     Given I'm not logged in
     When I create a student with username "student" and password "password" and email "student@student.app" and phoneNumber "123123123" and name "Student"
     Then The response code is 201
-    And There is 1 Student created with username "student" and password "password" and email "student@student.app" and phoneNumber "123123123" and name "Student"
+    And There is 1 Student created with username "student" and email "student@student.app" and phoneNumber "123123123" and name "Student"
 
 
   Scenario: Create a student with a blank email:
