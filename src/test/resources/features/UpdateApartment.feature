@@ -1,5 +1,5 @@
 Feature: Update Apartment
-  In order to manage apartments
+  In order to manage apartments as an Owner
   I want to update an apartment's feature
 
   Scenario: Update an apartment's name as Owner
