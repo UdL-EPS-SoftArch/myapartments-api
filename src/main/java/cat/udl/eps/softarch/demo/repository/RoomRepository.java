@@ -14,6 +14,5 @@ import java.util.Optional;
 public interface RoomRepository extends CrudRepository<Room, Long>, PagingAndSortingRepository<Room, Long> {
 
     @NotNull Optional<Room> findById(@Param("long")@NotNull Long id);
-    List<Room> findByOwner(@Param("owner") Owner owner);
     List<Room> findByApart(@Param("apart") Apartment apart);
 }

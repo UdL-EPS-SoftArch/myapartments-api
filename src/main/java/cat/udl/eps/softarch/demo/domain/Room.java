@@ -34,10 +34,10 @@ public class Room extends UriEntity<Long> {
     @NotNull
     private Apartment apart;
 
+    private String ownerId;
+    public void setOwner(Owner owner) {
+        ownerId = owner.getId();
+    }
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @NotNull
-    @ManyToOne
-    private Owner owner;
 
 }
