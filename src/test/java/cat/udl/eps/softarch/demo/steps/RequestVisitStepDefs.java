@@ -8,25 +8,20 @@ import cat.udl.eps.softarch.demo.repository.AdvertisementRepository;
 import cat.udl.eps.softarch.demo.repository.AdvertisementStatusRepository;
 import cat.udl.eps.softarch.demo.repository.ApartmentRepository;
 import cat.udl.eps.softarch.demo.repository.VisitRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
-import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -57,6 +52,7 @@ public class RequestVisitStepDefs {
         advertisementStatusRepository.save(advertisementStatus);
 
     }
+
     @Given("There is an advertisement with title {string} and address {string}")
     public void thereIsAnAdvertisementWithTitleAndAddress(String title, String address) {
         advertisement = new Advertisement();
@@ -83,10 +79,10 @@ public class RequestVisitStepDefs {
 
         Advertisement advertisement;
 
-        if(title.equals("Invalid Advertisement"))
-             advertisement = null;
-        else  {
-             advertisement = advertisementRepository.findByTitle(title).get(0);
+        if (title.equals("Invalid Advertisement"))
+            advertisement = null;
+        else {
+            advertisement = advertisementRepository.findByTitle(title).get(0);
         }
 
         String visitDateTime = ZonedDateTime.now().plusDays(30).toString();
@@ -101,7 +97,7 @@ public class RequestVisitStepDefs {
 
         String jsonContent = objectMapper.writeValueAsString(visit);
 
-        if(advertisement != null) {
+        if (advertisement != null) {
             result = stepDefs.mockMvc.perform(post("/visits")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(jsonContent)
