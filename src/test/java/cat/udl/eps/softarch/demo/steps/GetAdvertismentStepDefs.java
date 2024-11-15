@@ -42,7 +42,7 @@ public class GetAdvertismentStepDefs {
 
         if (ad == null) {
             stepDefs.result = stepDefs.mockMvc.perform(
-                    get("/advertisements/{id}", 9999)
+                    get("/advertisements/{id}", -1)
                             .accept(MediaType.APPLICATION_JSON)
             ).andDo(print());
         } else {
