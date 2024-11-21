@@ -33,7 +33,7 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/apartments/").hasAnyRole("OWNER")
                         .requestMatchers(HttpMethod.POST, "/apartments/*").hasAnyRole("OWNER")
                         .requestMatchers(HttpMethod.POST, "/advertisementStatuses").hasAnyRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/advertisementStatuses").hasAnyRole("OWNER")
+                        .requestMatchers(HttpMethod.DELETE, "/advertisementStatuses").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/advertisementStatuses/*").hasAnyRole("OWNER")
                         .requestMatchers(HttpMethod.PATCH, "/advertisementStatuses/*").hasAnyRole("OWNER")
                         .requestMatchers(HttpMethod.POST, "/users").anonymous()
