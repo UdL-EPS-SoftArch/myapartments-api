@@ -32,7 +32,7 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/apartments").hasAuthority("ROLE_OWNER")
                         .requestMatchers(HttpMethod.POST, "/apartments/").hasAnyRole("OWNER")
                         .requestMatchers(HttpMethod.POST, "/apartments/*").hasAnyRole("OWNER")
-                        .requestMatchers(HttpMethod.POST, "/advertisementStatuses").hasAnyRole("OWNER")
+                        .requestMatchers(HttpMethod.POST, "/advertisementStatuses").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/advertisementStatuses").hasAnyRole("OWNER")
                         .requestMatchers(HttpMethod.PUT, "/advertisementStatuses/*").hasAnyRole("OWNER")
                         .requestMatchers(HttpMethod.PATCH, "/advertisementStatuses/*").hasAnyRole("OWNER")
