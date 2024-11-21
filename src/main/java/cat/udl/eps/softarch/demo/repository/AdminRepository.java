@@ -10,5 +10,6 @@ import java.util.List;
 
 @RepositoryRestResource
 public interface AdminRepository extends CrudRepository<User, String>, PagingAndSortingRepository<User, String> {
-  
+
+  List<User> findByEmail(@Param("email") String text);
 }
