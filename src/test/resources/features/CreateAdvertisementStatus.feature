@@ -7,10 +7,18 @@ Feature: AdvertisementStatus Creation
     When I create a new advertisement status with status "PENDING"
     Then The advertisement status has been created with status "PENDING"
 
-  Scenario: Create an AdvertisementStatus with an invalid user
+  Scenario: Create an AdvertisementStatus with user role
 
     Given There is a registered user with username "user" and password "password" and email "owner@example.com"
     And I login as "user" with password "password"
+    When I create a new advertisement status with status "PENDING"
+    Then The response code is 403
+
+
+  Scenario: Create an AdvertisementStatus with owner role
+
+    Given There is a registered user with username "user" and password "password" and email "owner@example.com"
+    And I login as "owner" with password "password"
     When I create a new advertisement status with status "PENDING"
     Then The response code is 403
 
