@@ -35,7 +35,7 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/advertisementStatuses").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/advertisementStatuses").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/advertisementStatuses/*").hasAnyRole("ADMIN")
-                        .requestMatchers(HttpMethod.PATCH, "/advertisementStatuses/*").hasAnyRole("OWNER")
+                        .requestMatchers(HttpMethod.PATCH, "/advertisementStatuses/*").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/users").anonymous()
                         .requestMatchers(HttpMethod.POST, "/users/*").denyAll()
                         .requestMatchers(HttpMethod.POST, "/rooms").authenticated()
