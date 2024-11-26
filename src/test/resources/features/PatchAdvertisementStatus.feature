@@ -39,3 +39,11 @@ Feature: Patch an Advertisement Status
     And The advertisementStatus has been patched to "Occupied"
 
 
+  Scenario: Patch a Advertisement Status when logged in as a owner and status null
+    Given I login as "admin" with password "password"
+    And There is an advertisement Status already created with status "Available"
+    When I patch an advertisementStatus with status "Available" and change it to "null"
+    Then The response code is 400
+    And The advertisementStatus has not been patched to "null"
+
+
