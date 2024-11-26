@@ -23,6 +23,14 @@ Feature: Modify an Advertisement Status
     And The error message is "Forbidden"
     And The advertisementStatus has not been modified to "Occupied"
 
+  Scenario: Modify a Advertisement Status when logged in as a owner
+    Given I login as "owner" with password "password"
+    And There is an advertisementStatus already created with status "Available"
+    When I modify an advertisementStatus with status "Available" and change it to "Occupied"
+    Then The response code is 403
+    And The error message is "Forbidden"
+    And The advertisementStatus has not been modified to "Occupied"
+
   Scenario: Modify a Advertisement Status when logged in as a admin
     Given I login as "admin" with password "password"
     And There is an advertisementStatus already created with status "Available"
