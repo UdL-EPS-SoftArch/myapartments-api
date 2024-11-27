@@ -27,11 +27,20 @@ Feature: Patch an Advertisement Status
     Given I login as "owner" with password "password"
     And There is an advertisement Status already created with status "Available"
     When I patch an advertisementStatus with status "Available" and change it to "Occupied"
+    Then The response code is 403
+    And The advertisementStatus has been patched to "Available"
+
+
+  Scenario: Patch a Advertisement Status when logged in as a owner
+    Given I login as "admin" with password "password"
+    And There is an advertisement Status already created with status "Available"
+    When I patch an advertisementStatus with status "Available" and change it to "Occupied"
     Then The response code is 204
     And The advertisementStatus has been patched to "Occupied"
 
+
   Scenario: Patch a Advertisement Status when logged in as a owner and status null
-    Given I login as "owner" with password "password"
+    Given I login as "admin" with password "password"
     And There is an advertisement Status already created with status "Available"
     When I patch an advertisementStatus with status "Available" and change it to "null"
     Then The response code is 400

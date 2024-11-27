@@ -1,10 +1,6 @@
 package cat.udl.eps.softarch.demo.config;
-import cat.udl.eps.softarch.demo.domain.Owner;
-import cat.udl.eps.softarch.demo.domain.Advertisement;
-import cat.udl.eps.softarch.demo.domain.User;
-import cat.udl.eps.softarch.demo.repository.OwnerRepository;
-import cat.udl.eps.softarch.demo.repository.AdvertisementRepository;
-import cat.udl.eps.softarch.demo.repository.UserRepository;
+import cat.udl.eps.softarch.demo.domain.*;
+import cat.udl.eps.softarch.demo.repository.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import jakarta.annotation.PostConstruct;
@@ -23,11 +19,13 @@ public class DBInitialization {
     @Value("${spring.profiles.active:}")
     private String activeProfiles;
     private final UserRepository userRepository;
+    private final AdminRepository adminRepository;
     private final AdvertisementRepository advertisementRepository;
 
-    public DBInitialization(UserRepository userRepository, OwnerRepository ownerRepository, AdvertisementRepository advertisementRepository) {
+    public DBInitialization(UserRepository userRepository, OwnerRepository ownerRepository, AdminRepository adminRepository, AdvertisementRepository advertisementRepository) {
         this.userRepository = userRepository;
         this.ownerRepository = ownerRepository;
+        this.adminRepository = adminRepository;
         this.advertisementRepository = advertisementRepository;
     }
 
@@ -41,6 +39,15 @@ public class DBInitialization {
             user.setPassword(defaultPassword);
             user.encodePassword();
             userRepository.save(user);
+        }
+        // Default admin
+        if (!adminRepository.existsById("admin")) {
+            Admin user = new Admin();
+            user.setEmail("admin@sample.app");
+            user.setId("admin");
+            user.setPassword(defaultPassword);
+            user.encodePassword();
+            adminRepository.save(user);
         }
 
         if (!ownerRepository.existsById("owner")) {
