@@ -93,7 +93,6 @@ public class AdvertisementStepDefs {
             room.setApart(apartment);
         }
 
-        apartment.setRooms(rooms);
         apartmentRepository.save(apartment);
     }
 
