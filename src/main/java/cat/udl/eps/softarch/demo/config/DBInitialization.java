@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import jakarta.annotation.PostConstruct;
 
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import cat.udl.eps.softarch.demo.domain.Advertisement;
 import cat.udl.eps.softarch.demo.repository.AdvertisementRepository;
@@ -20,17 +21,20 @@ public class DBInitialization {
     private String activeProfiles;
     private final UserRepository userRepository;
     private final AdminRepository adminRepository;
+    private final ApartmentRepository apartmentRepository;
     private final AdvertisementRepository advertisementRepository;
 
-    public DBInitialization(UserRepository userRepository, OwnerRepository ownerRepository, AdminRepository adminRepository, AdvertisementRepository advertisementRepository) {
+    public DBInitialization(UserRepository userRepository, OwnerRepository ownerRepository, AdminRepository adminRepository, AdvertisementRepository advertisementRepository, ApartmentRepository apartmentRepository) {
         this.userRepository = userRepository;
         this.ownerRepository = ownerRepository;
+        this.apartmentRepository = apartmentRepository;
         this.adminRepository = adminRepository;
         this.advertisementRepository = advertisementRepository;
     }
 
     @PostConstruct
     public void initializeDatabase() {
+        Owner mainOwner;
         // Default user
         if (!userRepository.existsById("demo")) {
             User user = new User();
@@ -51,14 +55,16 @@ public class DBInitialization {
         }
 
         if (!ownerRepository.existsById("owner")) {
-            Owner owner = new Owner();
-            owner.setEmail("owner@sample.app");
-            owner.setId("owner");
-            owner.setName("Abde");
-            owner.setPhoneNumber("639826878");
-            owner.setPassword(defaultPassword);
-            owner.encodePassword();
-            ownerRepository.save(owner);
+            mainOwner = new Owner();
+            mainOwner.setEmail("owner@sample.app");
+            mainOwner.setId("owner");
+            mainOwner.setName("owner");
+            mainOwner.setPhoneNumber("639826878");
+            mainOwner.setPassword(defaultPassword);
+            mainOwner.encodePassword();
+            ownerRepository.save(mainOwner);
+        }else{
+            mainOwner=ownerRepository.findByName("owner").stream().findFirst().get();
         }
 
         if (!ownerRepository.existsById("owner1")) {
@@ -70,6 +76,20 @@ public class DBInitialization {
             owner.setPassword(defaultPassword);
             owner.encodePassword();
             ownerRepository.save(owner);
+        }
+
+        if(apartmentRepository.findByName("This apartment is static DO NOT TOUCH").isEmpty()){
+            Apartment apartment = new Apartment();
+            apartment.setDescription("This apartment is static DO NOT TOUCH");
+            apartment.setName("This apartment is static DO NOT TOUCH");
+            apartment.setOwner(mainOwner);
+            apartment.setFloor(2);
+            apartment.setAddress("This apartment is static DO NOT TOUCH");
+            apartment.setPostalCode("12345");
+            apartment.setCity("This apartment is static DO NOT TOUCH");
+            apartment.setCountry("This apartment is static DO NOT TOUCH");
+            apartment.setRegistrationDate(ZonedDateTime.now());
+            apartmentRepository.save(apartment);
         }
         if (Arrays.asList(activeProfiles.split(",")).contains("test")) {
             // Testing instances
