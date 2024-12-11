@@ -34,7 +34,7 @@ public class Visit extends UriEntity<Long> {
     @Setter
     @Getter
     @NotNull
-    private Status status;
+    private Status status = Status.PENDING;
 
     public enum Status {
         PENDING("pending"),
