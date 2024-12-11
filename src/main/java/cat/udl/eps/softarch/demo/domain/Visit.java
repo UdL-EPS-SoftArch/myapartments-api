@@ -25,6 +25,33 @@ public class Visit extends UriEntity<Long> {
     @Column(name = "visit_date")
     private ZonedDateTime when;
 
+    @ManyToOne
+    @JoinColumn(name = "username_id")
+    private User username;
+
+    // Setter
+    // Getter
+    @Setter
+    @Getter
+    @NotNull
+    private Status status = Status.PENDING;
+
+    public enum Status {
+        PENDING("pending"),
+        ACCEPTED("accepted"),
+        REJECTED("rejected");
+
+        private final String value;
+
+        Status(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+    }
+
 
     @ManyToOne
     @NotNull
@@ -35,3 +62,4 @@ public class Visit extends UriEntity<Long> {
         this.when = parse;
     }
 }
+
