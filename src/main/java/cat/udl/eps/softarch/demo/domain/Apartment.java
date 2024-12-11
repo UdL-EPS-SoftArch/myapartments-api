@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.time.ZonedDateTime;
-import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity(name = "apartment")
