@@ -15,7 +15,6 @@ import java.util.Set;
 @Configuration
 public class DBInitialization {
     private final OwnerRepository ownerRepository;
-    private final AdvertisementStatusRepository advertisementStatusRepository;
     @Value("${default-password}")
     String defaultPassword;
     @Value("${spring.profiles.active:}")
@@ -25,13 +24,12 @@ public class DBInitialization {
     private final ApartmentRepository apartmentRepository;
     private final AdvertisementRepository advertisementRepository;
 
-    public DBInitialization(UserRepository userRepository, OwnerRepository ownerRepository, AdminRepository adminRepository, AdvertisementRepository advertisementRepository, ApartmentRepository apartmentRepository, AdvertisementStatusRepository advertisementStatusRepository) {
+    public DBInitialization(UserRepository userRepository, OwnerRepository ownerRepository, AdminRepository adminRepository, AdvertisementRepository advertisementRepository, ApartmentRepository apartmentRepository) {
         this.userRepository = userRepository;
         this.ownerRepository = ownerRepository;
         this.apartmentRepository = apartmentRepository;
         this.adminRepository = adminRepository;
         this.advertisementRepository = advertisementRepository;
-        this.advertisementStatusRepository = advertisementStatusRepository;
     }
 
     @PostConstruct
@@ -92,24 +90,6 @@ public class DBInitialization {
             apartment.setCountry("This apartment is static DO NOT TOUCH");
             apartment.setRegistrationDate(ZonedDateTime.now());
             apartmentRepository.save(apartment);
-        }
-
-        if(advertisementStatusRepository.findByStatus("Available").isEmpty()){
-            AdvertisementStatus advertisementStatus = new AdvertisementStatus();
-            advertisementStatus.setStatus("Available");
-            advertisementStatusRepository.save(advertisementStatus);
-        }
-
-        if(advertisementStatusRepository.findByStatus("Reserved").isEmpty()){
-            AdvertisementStatus advertisementStatus = new AdvertisementStatus();
-            advertisementStatus.setStatus("Reserved");
-            advertisementStatusRepository.save(advertisementStatus);
-        }
-
-        if(advertisementStatusRepository.findByStatus("Sold").isEmpty()){
-            AdvertisementStatus advertisementStatus = new AdvertisementStatus();
-            advertisementStatus.setStatus("Sold");
-            advertisementStatusRepository.save(advertisementStatus);
         }
         if (Arrays.asList(activeProfiles.split(",")).contains("test")) {
             // Testing instances
