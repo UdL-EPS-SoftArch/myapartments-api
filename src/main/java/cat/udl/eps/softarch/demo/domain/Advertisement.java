@@ -18,8 +18,6 @@ import java.time.ZonedDateTime;
 @Entity
 public class Advertisement extends UriEntity<Long> {
 
-    @Version
-    private Long version;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,6 +61,5 @@ public class Advertisement extends UriEntity<Long> {
 
     public Advertisement() {
         this.creationDate = ZonedDateTime.now();
-        this.version = 1L;
     }
 }
