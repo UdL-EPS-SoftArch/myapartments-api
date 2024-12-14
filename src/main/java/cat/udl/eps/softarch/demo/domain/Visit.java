@@ -39,7 +39,8 @@ public class Visit extends UriEntity<Long> {
     public enum Status {
         PENDING("pending"),
         ACCEPTED("accepted"),
-        REJECTED("rejected");
+        REJECTED("rejected"),
+        CANCELLED("cancelled");
 
         private final String value;
 
