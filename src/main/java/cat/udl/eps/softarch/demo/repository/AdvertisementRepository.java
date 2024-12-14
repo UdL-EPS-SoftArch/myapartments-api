@@ -9,5 +9,4 @@ import java.util.List;
 
 public interface AdvertisementRepository extends CrudRepository<Advertisement, Long>, PagingAndSortingRepository<Advertisement, Long> {
     List<Advertisement> findByTitle(@Param("title") String title);
-
 }
