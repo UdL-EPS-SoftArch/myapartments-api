@@ -1,5 +1,7 @@
 package cat.udl.eps.softarch.demo.domain;
 
+import cat.udl.eps.softarch.demo.handler.AdvertisementStatusRepositoryHolder;
+import cat.udl.eps.softarch.demo.repository.AdvertisementStatusRepository;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -9,14 +11,19 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
+
+
 @Setter
 @Getter
 @Entity
+
 public class Advertisement extends UriEntity<Long> {
+
 
 
     @Id
@@ -62,4 +69,14 @@ public class Advertisement extends UriEntity<Long> {
     public Advertisement() {
         this.creationDate = ZonedDateTime.now();
     }
+    @PrePersist
+    private void initializeAdStatus() {
+        if (this.adStatus == null) {
+            this.adStatus = AdvertisementStatusRepositoryHolder.getRepository()
+                    .findById(1L)
+                    .orElseThrow(() -> new RuntimeException("Default AdvertisementStatus with ID 1 not found"));
+        }
+    }
 }
+
+
