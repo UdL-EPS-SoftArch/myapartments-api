@@ -15,6 +15,7 @@ import java.util.Set;
 @Configuration
 public class DBInitialization {
     private final OwnerRepository ownerRepository;
+    private final AdvertisementStatusRepository advertisementStatusRepository;
     @Value("${default-password}")
     String defaultPassword;
     @Value("${spring.profiles.active:}")
@@ -24,12 +25,13 @@ public class DBInitialization {
     private final ApartmentRepository apartmentRepository;
     private final AdvertisementRepository advertisementRepository;
 
-    public DBInitialization(UserRepository userRepository, OwnerRepository ownerRepository, AdminRepository adminRepository, AdvertisementRepository advertisementRepository, ApartmentRepository apartmentRepository) {
+    public DBInitialization(UserRepository userRepository, OwnerRepository ownerRepository, AdminRepository adminRepository, AdvertisementRepository advertisementRepository, ApartmentRepository apartmentRepository, AdvertisementStatusRepository advertisementStatusRepository) {
         this.userRepository = userRepository;
         this.ownerRepository = ownerRepository;
         this.apartmentRepository = apartmentRepository;
         this.adminRepository = adminRepository;
         this.advertisementRepository = advertisementRepository;
+        this.advertisementStatusRepository = advertisementStatusRepository;
     }
 
     @PostConstruct
@@ -53,7 +55,21 @@ public class DBInitialization {
             user.encodePassword();
             adminRepository.save(user);
         }
-
+        if(advertisementStatusRepository.findByStatus("Available").isEmpty()){
+            AdvertisementStatus status = new AdvertisementStatus();
+            status.setStatus("Available");
+            advertisementStatusRepository.save(status);
+        }
+        if(advertisementStatusRepository.findByStatus("Reserved").isEmpty()){
+            AdvertisementStatus status = new AdvertisementStatus();
+            status.setStatus("Reserved");
+            advertisementStatusRepository.save(status);
+        }
+        if(advertisementStatusRepository.findByStatus("Sold").isEmpty()){
+            AdvertisementStatus status = new AdvertisementStatus();
+            status.setStatus("Sold");
+            advertisementStatusRepository.save(status);
+        }
         if (!ownerRepository.existsById("owner")) {
             mainOwner = new Owner();
             mainOwner.setEmail("owner@sample.app");

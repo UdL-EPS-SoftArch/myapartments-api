@@ -38,6 +38,8 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.PATCH, "/advertisementStatuses/*").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/users").anonymous()
                         .requestMatchers(HttpMethod.POST, "/users/*").denyAll()
+                        .requestMatchers(HttpMethod.POST, "/images").hasAuthority("ROLE_OWNER")
+                        .requestMatchers(HttpMethod.POST, "/images/").hasAnyRole("OWNER")
                         .requestMatchers(HttpMethod.POST, "/rooms").authenticated()
                         .requestMatchers(HttpMethod.POST, "/rooms/*").hasAnyRole("OWNER")
                         .requestMatchers(HttpMethod.PATCH, "/rooms").authenticated()
