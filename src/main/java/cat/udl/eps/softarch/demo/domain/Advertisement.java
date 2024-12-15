@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
-
+import java.util.List;
 
 
 @Setter
@@ -72,9 +72,12 @@ public class Advertisement extends UriEntity<Long> {
     @PrePersist
     private void initializeAdStatus() {
         if (this.adStatus == null) {
-            this.adStatus = AdvertisementStatusRepositoryHolder.getRepository()
-                    .findById(1L)
-                    .orElseThrow(() -> new RuntimeException("Default AdvertisementStatus with ID 1 not found"));
+            List<AdvertisementStatus> entities = AdvertisementStatusRepositoryHolder.getRepository().findByStatus("Available");
+
+            if (entities.isEmpty()) {
+                throw new EntityNotFoundException("No entities found with status: Available" );
+            }
+            this.adStatus = entities.get(0);
         }
     }
 }
